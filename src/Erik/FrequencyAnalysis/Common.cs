@@ -9,6 +9,7 @@ namespace FrequencyAnalysis
 {
     public static class Common
     {
+        public const int ALPHABET_LENGTH = 26;
         public static IEnumerable<string> SplitStringIntoChunks(string toSplit, int length, char paddingChar = ' ', int offset = 1)
         {
             string paddedString = toSplit + new string(paddingChar, length - toSplit.Length % length);

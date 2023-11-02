@@ -50,6 +50,22 @@ public class FrequencyAnalysisResult : IReadOnlyDictionary<string, int>
         sb.Append("]");
         return sb.ToString();
     }
+    /// <summary>
+    /// How closely this result matches with another.
+    /// Only compares letters existing in the current table. To compare all letters, use the static method (TBI).
+    /// </summary>
+    /// <param name="other">The other result to compare with.</param>
+    /// <exception cref="KeyNotFoundException">If current table has a key that <paramref name="other"/> does not.</exception>
+    /// <returns>A value between 0 and 1. 1 represents full match and 0 no match.</returns>
+    public double Compare(FrequencyAnalysisResult other)
+    {
+        double deviation = 0;
+        foreach (var pair in _internalDictionary)
+        {
+            deviation += Math.Pow(pair.Value - other[pair.Key],2);
+        }
+        return 1 / (deviation + 1);
+    }
 
     public bool ContainsKey(string key) => _internalDictionary.ContainsKey(key);
     public bool TryGetValue(string key, [MaybeNullWhen(false)] out int value) => _internalDictionary.TryGetValue(key, out value);
