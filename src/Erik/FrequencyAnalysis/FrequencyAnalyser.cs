@@ -14,7 +14,7 @@ namespace FrequencyAnalysis
         /// <param name="text">The text to analyse.</param>
         /// <param name="param">The parameters.</param>
         /// <returns></returns>
-        public static FrequencyAnalysisResult AnalyseText(string text, FrequencyAnalysisParamters param)
+        public static CustomFrequencyAnalysisResult AnalyseText(string text, FrequencyAnalysisParamters param)
         {
             Dictionary<string, int> counts = new Dictionary<string, int>();
             foreach(var block in Common.SplitStringIntoChunks(text, param.NGramLength))
@@ -22,9 +22,9 @@ namespace FrequencyAnalysis
                 if (counts.ContainsKey(block))
                     counts[block]++;
                 else
-                    counts[block] = 0;
+                    counts[block] = 1;
             }
-            return new FrequencyAnalysisResult(param, counts);
+            return new CustomFrequencyAnalysisResult(param, counts);
         }
     }
 }
