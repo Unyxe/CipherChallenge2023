@@ -10,6 +10,11 @@ namespace CiphersMain.Ciphers
 {
     public class SubstitutionCipher : ICipher<char>
     {
+        /// <summary>
+        /// Creates a substitution key for a Caeser (shift) cipher.
+        /// </summary>
+        /// <param name="shift">The alphabet shift.</param>
+        /// <returns>The Caeser cipher key.</returns>
         public static CharacterKey CreateCaesarKey(int shift)
         {
             CharacterKey key = new CharacterKey();
@@ -17,6 +22,8 @@ namespace CiphersMain.Ciphers
                 key.SetForward(StringUtils.GetCharFromIndex(i), StringUtils.GetCharFromIndex((i + shift) % StringUtils.ALPHABET_LENGTH));
             return key;
         }
+        /// <inheritdoc/>
+        /// <exception cref="ArgumentException">If the key is not if type <see cref="IKey{char}"/></exception>
         public string Decrypt(string cipherText, IKey<char> key)
         {
             CharacterKey? newKey = key as CharacterKey;
@@ -31,7 +38,8 @@ namespace CiphersMain.Ciphers
             }
             return sb.ToString();
         }
-
+        /// <inheritdoc/>
+        /// <exception cref="ArgumentException">If the key is not if type <see cref="IKey{char}"/></exception>
         public string Encrypt(string plainText, IKey<char> key)
         {
             CharacterKey? newKey = key as CharacterKey;

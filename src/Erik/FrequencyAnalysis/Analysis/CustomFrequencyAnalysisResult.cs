@@ -16,7 +16,7 @@ public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
     /// </summary>
     public int Count { get => _internalDictionary.Count; }
     /// <inheritdoc/>
-    public int NGramLength { get => _internalParameters.NGramLength; }
+    public int PolygramLength { get => _internalParameters.NGramLength; }
     public IEnumerable<string> Keys => _internalDictionary.Keys;
     public IEnumerable<double> Values => _internalDictionary.Values.Cast<double>().Select(x => (double)x / Total);
     public double this[string key]

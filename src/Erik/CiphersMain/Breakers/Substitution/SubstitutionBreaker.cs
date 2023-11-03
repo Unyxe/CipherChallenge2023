@@ -50,7 +50,7 @@ namespace CiphersMain.Breakers.Substitution
                     {
                         string charS = c2.ToString();
                         diff = Math.Abs((DataTables.Instance.MonogramAnalysis[charS] - result[charS])/ DataTables.Instance.MonogramAnalysis[charS]);
-                        if (diff < minDifference && !knownChars.ContainsKey(c2) && !key.Reverse.ContainsKey(c2))
+                        if (diff < minDifference && !knownChars.ContainsKey(c2) && !key.ContainsValue(c2))
                         {
                             minDifference = diff;
                             bestMatchChar = c2;

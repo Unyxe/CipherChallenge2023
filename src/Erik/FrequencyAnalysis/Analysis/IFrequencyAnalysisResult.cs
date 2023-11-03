@@ -12,9 +12,9 @@ namespace FrequencyAnalysis
     {
 
         /// <summary>
-        /// The length of the N-Gram.
+        /// The length of the Polygram.
         /// </summary>
-        public int NGramLength { get; }
+        public int PolygramLength { get; }
         /// <summary>
         /// Returns how closely this analysis result matches with another.
         /// Only compares letters existing in the current table. To compare all letters, use the static method (TBI).
@@ -25,7 +25,7 @@ namespace FrequencyAnalysis
         public double Compare(IFrequencyAnalysisResult other);
 
         /// <summary>
-        /// A user-friendly string representing some data such as the Total, Count and most common occurance in the fequency analysis.
+        /// A user-friendly string representing some data such as the Total, Count and most common occurance in the frequency analysis.
         /// </summary>
         public string Summary { get; }
     }

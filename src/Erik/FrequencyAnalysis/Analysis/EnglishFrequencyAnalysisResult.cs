@@ -24,7 +24,7 @@ namespace FrequencyAnalysis
 
         public int Count => _internalDictionary.Count;
 
-        public int NGramLength => _internalParameters.NGramLength;
+        public int PolygramLength => _internalParameters.NGramLength;
 
         public EnglishFrequencyAnalysisResult(FrequencyAnalysisParamters p, Dictionary<string, double> frequencies)
         {
