@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErikMain", "ErikMain\ErikMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrequencyAnalysis", "FrequencyAnalysis\FrequencyAnalysis.csproj", "{B124826C-E910-4D1A-9F6A-C1FE691AC5F9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CipherCommon", "CipherCommon\CipherCommon.csproj", "{6EC8E762-D3EF-4ADD-9B41-EB0ECF48BF04}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CiphersMain", "CiphersMain\CiphersMain.csproj", "{6EC8E762-D3EF-4ADD-9B41-EB0ECF48BF04}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

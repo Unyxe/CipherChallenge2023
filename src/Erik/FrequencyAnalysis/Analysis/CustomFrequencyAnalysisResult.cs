@@ -21,7 +21,7 @@ public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
     public IEnumerable<double> Values => _internalDictionary.Values.Cast<double>().Select(x => (double)x / Total);
     public double this[string key]
     {
-        get => (double)_internalDictionary[key] / Total;
+        get => _internalDictionary.ContainsKey(key)?(double)_internalDictionary[key] / Total:0;
     }
     /// <summary>
     /// A read-only result of a frequency analysis.

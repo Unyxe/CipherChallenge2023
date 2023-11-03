@@ -1,15 +1,20 @@
-﻿using CipherCommon.Ciphers;
-using CipherCommon.Utils;
+﻿using CiphersMain.Breakers.Substitution;
+using CiphersMain.Ciphers;
+using CiphersMain.Keys;
+using CiphersMain.Utils;
 using FrequencyAnalysis;
+using System.Diagnostics;
 
-string path = @"C:\Erik\School\CipherChallenge2023\src\Erik\FrequencyAnalysis\ExampleText.txt";
+string path = @".\ExampleText.txt";
 List<string> texts = new List<string>{ };
 
 if (File.Exists(path))
     texts.Add(StringUtils.CipherFormat(File.ReadAllText(path)));
+texts.Add(StringUtils.CipherFormat(@"The Mighty Yeet"));
 
+Stopwatch sw = new Stopwatch();
+sw.Start();
 
-var cipher = new SubstitutionCipher();
-var key = SubstitutionCipher.CreateCaesarKey(1);
-
-StringUtils.WriteEnumerable(key);
+var breaker = new SubstitutionBreaker();
+StringUtils.WriteEnumerable(breaker.CreateGoodKey(texts[0], new CharacterKey("ABCDEF")).Values);
+StringUtils.WriteEnumerable(StringUtils.ALPHABET);

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FrequencyAnalysis.Analysis;
 
-namespace FrequencyAnalysis
+namespace FrequencyAnalysis.Data
 {
     public class DataTables
     {
@@ -21,13 +21,12 @@ namespace FrequencyAnalysis
                 return _instance;
             }
         }
-        public IFrequencyAnalysisResult TwoGramAnalysis { get; }
+        public IFrequencyAnalysisResult BigramAnalysis { get; }
 
-        public EnglishFrequencyAnalysisResult OneGramAnalysis { get; }
+        public EnglishFrequencyAnalysisResult MonogramAnalysis { get; }
 
-        public Dictionary<string, double> TwoGramFrequencies = new Dictionary<string, double>();
-        public Dictionary<string, double> OneGramFrequencies => LetterFrequencies;
-        public Dictionary<string, double> LetterFrequencies = new Dictionary<string, double>
+        public Dictionary<string, double> BigramFrequencies = new Dictionary<string, double>();
+        private Dictionary<string, double> _monogramFrequencies = new Dictionary<string, double>
         {
             { "A", 0.0834 },
             { "B", 0.0154 },
@@ -58,10 +57,10 @@ namespace FrequencyAnalysis
         };
         public DataTables()
         {
-            OneGramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 1 }, LetterFrequencies);
+            MonogramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 1 }, _monogramFrequencies);
 
-            TwoGramFrequencies = loadDict(".\\TwoNGram.csv");
-            TwoGramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 2 }, TwoGramFrequencies);
+            BigramFrequencies = loadDict(".\\TwoNGram.csv");
+            BigramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 2 }, BigramFrequencies);
         }
         private Dictionary<string, double> loadDict(string filename)
         {

@@ -34,14 +34,14 @@ namespace FrequencyAnalysis
         public double Compare(IFrequencyAnalysisResult other)
         {
             double deviation = 0;
-            foreach (var pair in _internalDictionary)
-            {
-                if (!other.ContainsKey(pair.Key))
-                    deviation += pair.Value;
-                else
-                    deviation += Math.Pow(pair.Value - other[pair.Key], 2);
-            }
-            return 1-deviation;
+            Parallel.ForEach(_internalDictionary, pair =>
+             {
+                 if (!other.ContainsKey(pair.Key))
+                     deviation += pair.Value;
+                 else
+                     deviation += Math.Pow(pair.Value - other[pair.Key], 2);
+             });
+            return 1 - deviation;
         }
 
         public bool ContainsKey(string key) => _internalDictionary.ContainsKey(key);

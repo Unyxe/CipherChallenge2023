@@ -5,10 +5,11 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace CipherCommon.Utils
+namespace CiphersMain.Utils
 {
     public static class StringUtils
     {
+        public static readonly char[] ALPHABET = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
         public const int ALPHABET_LENGTH = 26;
         public static IEnumerable<string> SplitIntoChunks(this string toSplit, int length, char paddingChar = ' ', int offset = 1)
         {
@@ -26,7 +27,7 @@ namespace CipherCommon.Utils
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="enumerable">The IEnumerable to output.</param>
-        public static void WriteEnumerable<T>(IEnumerable<T> enumerable)
+        public static void WriteEnumerable<T>(IEnumerable<T> enumerable, string separator = ", ")
         {
             foreach (var item in enumerable)
             {
@@ -34,18 +35,19 @@ namespace CipherCommon.Utils
                 switch (typeof(T))
                 {
                     case var t when t is IEnumerable<object>:
-                        Console.WriteLine(string.Join(", ", (IEnumerable<object>)item));
+                        Console.Write($"{string.Join(", ", (IEnumerable<object>)item)}{separator}");
                         break;
                     case var t when t is KeyValuePair<object, object>:
                         KeyValuePair<object, object> pair = (KeyValuePair<object, object>)(object)item;
-                        Console.WriteLine($"{pair.Key}, {pair.Value}");
+                        Console.Write($"{pair.Key}, {pair.Value}{separator}");
                         break;
                     default:
-                        Console.WriteLine(item);
+                        Console.Write($"{item}{separator}");
                         break;
                 }
 #pragma warning restore CS8600, CS8604, CS8605, CS8614, CS8618 // 'is' expression's given expression is never of the provided type
             }
+            Console.WriteLine();
         }
         public static string CipherFormat(string s) => Regex.Replace(s, "[^a-zA-Z0-9]*", "").ToUpper();
         public static string CipherFormatKeepWhitespace(string s) => Regex.Replace(s, "[^a-zA-Z0-9\\w]*", "").ToUpper();
