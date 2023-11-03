@@ -2,7 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-namespace FrequencyAnalysis;
+namespace FrequencyAnalysis.Analysis;
 public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
 {
     private Dictionary<string, int> _internalDictionary;
@@ -19,7 +19,8 @@ public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
     public int NGramLength { get => _internalParameters.NGramLength; }
     public IEnumerable<string> Keys => _internalDictionary.Keys;
     public IEnumerable<double> Values => _internalDictionary.Values.Cast<double>().Select(x => (double)x / Total);
-    public double this[string key] {
+    public double this[string key]
+    {
         get => (double)_internalDictionary[key] / Total;
     }
     /// <summary>
@@ -54,18 +55,18 @@ public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
         double deviation = 0;
         foreach (var pair in _internalDictionary)
         {
-            deviation += Math.Pow(pair.Value/Total - other[pair.Key], 2);
+            deviation += Math.Pow(pair.Value / Total - other[pair.Key], 2);
         }
-        return 1-deviation;
+        return 1 - deviation;
     }
 
     public bool ContainsKey(string key) => _internalDictionary.ContainsKey(key);
-    public bool TryGetValue(string key, [MaybeNullWhen(false)] out double value) 
+    public bool TryGetValue(string key, [MaybeNullWhen(false)] out double value)
     {
-        bool x = _internalDictionary.TryGetValue(key, out int v); 
-        value = (double)v / Total; 
-        return x; 
+        bool x = _internalDictionary.TryGetValue(key, out int v);
+        value = (double)v / Total;
+        return x;
     }
-    public IEnumerator<KeyValuePair<string, double>> GetEnumerator() => _internalDictionary.Select(x => new KeyValuePair<string, double>(x.Key, (double)x.Value/Total)).GetEnumerator();
+    public IEnumerator<KeyValuePair<string, double>> GetEnumerator() => _internalDictionary.Select(x => new KeyValuePair<string, double>(x.Key, (double)x.Value / Total)).GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }
