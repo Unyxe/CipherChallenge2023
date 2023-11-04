@@ -8,7 +8,7 @@ using CiphersMain.Utils;
 
 namespace CiphersMain.Ciphers
 {
-    public class SubstitutionCipher : ICipher<char>
+    public class SubstitutionCipher : ICipher<CharacterKey>
     {
         /// <summary>
         /// Creates a substitution key for a Caeser (shift) cipher.
@@ -23,34 +23,22 @@ namespace CiphersMain.Ciphers
             return key;
         }
         /// <inheritdoc/>
-        /// <exception cref="ArgumentException">If the key is not if type <see cref="IKey{char}"/></exception>
-        public string Decrypt(string cipherText, IKey<char> key)
+        public string Decrypt(string cipherText, CharacterKey key)
         {
-            CharacterKey? newKey = key as CharacterKey;
-            if (newKey == null)
-                throw new ArgumentException("Key in unrecognised format.");
-
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < cipherText.Length; i++)
             {
-                char newChar = newKey.GetReverse(cipherText[i]);
-                sb.Append(newChar);
+                sb.Append(key.GetReverse(cipherText[i]));
             }
             return sb.ToString();
         }
         /// <inheritdoc/>
-        /// <exception cref="ArgumentException">If the key is not if type <see cref="IKey{char}"/></exception>
-        public string Encrypt(string plainText, IKey<char> key)
+        public string Encrypt(string plainText, CharacterKey key)
         {
-            CharacterKey? newKey = key as CharacterKey;
-            if (newKey == null)
-                throw new ArgumentException("Key in unrecognised format.");
-
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < plainText.Length; i++)
             {
-                char newChar = newKey.GetForward(plainText[i]);
-                sb.Append(newChar);
+                sb.Append(key.GetForward(plainText[i]));
             }
             return sb.ToString();
         }

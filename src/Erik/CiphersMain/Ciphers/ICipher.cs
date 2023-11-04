@@ -5,7 +5,7 @@ namespace CiphersMain.Ciphers;
 /// <summary>
 /// A generic Cipher algorithm.
 /// </summary>
-/// <typeparam name="T">The type the key deals with. Usually <see cref="char"/>.</typeparam>
+/// <typeparam name="T">The key type. Usually <see cref="char"/>.</typeparam>
 public interface ICipher<T>
 {
     /// <summary>
@@ -14,12 +14,12 @@ public interface ICipher<T>
     /// <param name="plainText"></param>
     /// <param name="key"></param>
     /// <returns>The encrypted text.</returns>
-    public string Encrypt(string plainText, IKey<T> key);
+    public string Encrypt(string plainText, T key);
     /// <summary>
     /// Decrypts the text.
     /// </summary>
     /// <param name="cipherText"></param>
     /// <param name="key"></param>
     /// <returns>The decrypted text.</returns>
-    public string Decrypt(string cipherText, IKey<T> key);
+    public string Decrypt(string cipherText, T key);
 }

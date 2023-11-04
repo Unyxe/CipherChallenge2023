@@ -21,11 +21,11 @@ namespace FrequencyAnalysis.Data
                 return _instance;
             }
         }
-        public IFrequencyAnalysisResult BigramAnalysis { get; }
-
         public EnglishFrequencyAnalysisResult MonogramAnalysis { get; }
+        public IFrequencyAnalysisResult BigramAnalysis { get; }
+        public IFrequencyAnalysisResult TrigramAnalysis { get; }
+        public IFrequencyAnalysisResult QuadgramAnalysis { get; }
 
-        public Dictionary<string, double> BigramFrequencies = new Dictionary<string, double>();
         private Dictionary<string, double> _monogramFrequencies = new Dictionary<string, double>
         {
             { "A", 0.0834 },
@@ -59,8 +59,9 @@ namespace FrequencyAnalysis.Data
         {
             MonogramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 1 }, _monogramFrequencies);
 
-            BigramFrequencies = loadDict(".\\TwoNGram.csv");
-            BigramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 2 }, BigramFrequencies);
+            BigramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 2 }, loadDict(".\\Data\\Bigram.csv"));            
+            TrigramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 3 }, loadDict(".\\Data\\Trigram.csv"));
+            QuadgramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 4 }, loadDict(".\\Data\\Quadgram.csv"));
         }
         private Dictionary<string, double> loadDict(string filename)
         {

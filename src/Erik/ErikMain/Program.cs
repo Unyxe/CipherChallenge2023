@@ -1,8 +1,10 @@
 ﻿using CiphersMain.Breakers.Substitution;
+using CiphersMain.Breakers;
 using CiphersMain.Ciphers;
 using CiphersMain.Keys;
 using CiphersMain.Utils;
 using FrequencyAnalysis;
+using FrequencyAnalysis.Data;
 using System.Diagnostics;
 
 string path = @".\ExampleText.txt";
@@ -15,6 +17,24 @@ texts.Add(StringUtils.CipherFormat(@"The Mighty Yeet"));
 Stopwatch sw = new Stopwatch();
 sw.Start();
 
+
+
+var cipher = new SubstitutionCipher();
+var key = new CharacterKey(StringUtils.ALPHABET);
+
+key.MutateKey();
+
+string cipherT = cipher.Encrypt(texts[0], key);
+string decipherT = cipher.Decrypt(cipherT, key);
+
+Console.WriteLine(DataTables.Instance.BigramAnalysis.Compare(FrequencyAnalyser.AnalyseText(texts[0], new FrequencyAnalysisParamters { NGramLength = 2 })));
+
+//Console.WriteLine(decipherT);
+
 var breaker = new SubstitutionBreaker();
-StringUtils.WriteEnumerable(breaker.CreateGoodKey(texts[0], new CharacterKey("ABCDEF")).Values);
-StringUtils.WriteEnumerable(StringUtils.ALPHABET);
+var result = breaker.Break(cipherT);
+
+StringUtils.WriteEnumerable(result);
+StringUtils.WriteEnumerable(key);
+
+Console.WriteLine(sw.ElapsedMilliseconds);

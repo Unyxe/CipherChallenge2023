@@ -8,7 +8,7 @@ using FrequencyAnalysis.Data;
 
 namespace CiphersMain.Breakers.Fitness
 {
-    public class MonogramFitnessFunction : IFittnessFunction
+    public class MonogramFitnessFunction : IFitnessFunction
     {
         private readonly FrequencyAnalysisParamters paramters = new FrequencyAnalysisParamters { NGramLength=1};
 

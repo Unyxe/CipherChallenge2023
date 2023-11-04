@@ -17,7 +17,7 @@ namespace FrequencyAnalysis.Utils
             string paddedString = toSplit + new string(paddingChar, length - toSplit.Length % length);
             for (int i = 0; i < paddedString.Length-length-offset; i+= offset)
             {
-                var substring = toSplit.Substring(i, length);
+                var substring = paddedString.Substring(i, length);
                 if (Regex.IsMatch(substring, @"[^a-zA-Z0-9]*"))
                     yield return substring;
             }

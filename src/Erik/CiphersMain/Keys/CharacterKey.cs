@@ -1,4 +1,6 @@
 ﻿using CiphersMain.Utils;
+using FrequencyAnalysis;
+using FrequencyAnalysis.Data;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,6 +13,7 @@ namespace CiphersMain.Keys
 {
     public class CharacterKey : IKey<char>, IDictionary<char, char>
     {
+        protected Random _randomSource = new Random();
         private Dictionary<char, char> _forward { get; set; } = new Dictionary<char, char>();
         private Dictionary<char, char> _reverse { get; set; } = new Dictionary<char, char>();
 
@@ -28,13 +31,40 @@ namespace CiphersMain.Keys
         /// </summary>
         public CharacterKey(){ }
         /// <summary>
-        /// Creates an <see cref="CharacterKey"/> from string representation.
+        /// Creates a <see cref="CharacterKey"/> from string representation.
         /// </summary>
         public CharacterKey(string key)
         {
             for (int i = 0; i < key.Length; i++)
                 SetForward(StringUtils.GetCharFromIndex(i), key[i]);
         }
+        /// <summary>
+        /// Creates a <see cref="CharacterKey"/> from an array.
+        /// </summary>
+        public CharacterKey(char[] key)
+        {
+            for (int i = 0; i < key.Length; i++)
+                SetForward(StringUtils.GetCharFromIndex(i), key[i]);
+        }
+        /// <summary>
+        /// Creates a <see cref="CharacterKey"/> from a known key (copies it).
+        /// </summary>
+        public CharacterKey(CharacterKey knownKey)
+        {
+            foreach (var key in knownKey.Keys)
+            {
+                SetForward(key, knownKey[key]);
+            }
+        }
+        public CharacterKey(int seed)
+        {
+            _randomSource = new Random(seed);
+        }
+        /// <summary>
+        /// Returns a random value between 0 and 26 (exclusive).
+        /// </summary>
+        /// <returns></returns>
+        public int RandomIndex() => _randomSource.Next(StringUtils.ALPHABET_LENGTH);
         /// <summary>
         /// The forward getter for values.
         /// </summary>
@@ -65,10 +95,8 @@ namespace CiphersMain.Keys
         public void SetReverse(char key, char value) => SetForward(value, key);
 
         public void Add(char key, char value) => SetForward(key, value);
-
         public bool ContainsKey(char key) => _forward.ContainsKey(key);
         public bool ContainsValue(char value) => _reverse.ContainsKey(value);
-
         public bool Remove(char key)
         {
             if (_forward.ContainsKey(key))
@@ -81,28 +109,73 @@ namespace CiphersMain.Keys
         }
 
         public bool TryGetValue(char key, [MaybeNullWhen(false)] out char value) => _forward.TryGetValue(key, out value);
-
         public void Add(KeyValuePair<char, char> item) =>
             SetForward(item.Key, item.Value);
-
         public void Clear()
         {
             _forward.Clear();
             _reverse.Clear();
         }
-
         public bool Contains(KeyValuePair<char, char> item) =>
             _forward.Contains(item);
-
-        public void CopyTo(KeyValuePair<char, char>[] array, int arrayIndex)
-        {
+        public void CopyTo(KeyValuePair<char, char>[] array, int arrayIndex)=>
             throw new NotImplementedException();
-        }
-
         public bool Remove(KeyValuePair<char, char> item) => Remove(item.Key);
-
         IEnumerator<KeyValuePair<char, char>> IEnumerable<KeyValuePair<char, char>>.GetEnumerator() => _forward.GetEnumerator();
-
         public IEnumerator GetEnumerator() => _forward.GetEnumerator();
+
+
+        public static CharacterKey Empty { get; } = new CharacterKey();
+
+        /// <summary>
+        /// Creates a <see cref="CharacterKey"/> based on frequency analysis.
+        /// </summary>
+        /// <param name="text">The text to analyse.</param>
+        /// <param name="knownChars">The known character map.</param>
+        /// <returns></returns>
+        public static CharacterKey CreateGoodKey(string text, IDictionary<char, char> knownChars) => CreateGoodKey(FrequencyAnalyser.AnalyseText(text), knownChars);
+        /// <summary>
+        /// Creates a <see cref="CharacterKey"/> based on frequency analysis.
+        /// </summary>
+        /// <param name="text">The text to analyse.</param>
+        /// <returns></returns>
+        public static CharacterKey CreateGoodKey(string text) => CreateGoodKey(FrequencyAnalyser.AnalyseText(text), new Dictionary<char, char>());
+        /// <summary>
+        /// Creates a <see cref="CharacterKey"/> based on frequency analysis.
+        /// </summary>
+        /// <param name="result">The frequency analysis table.</param>
+        /// <param name="knownChars">The known character map.</param>
+        /// <returns></returns>
+        public static CharacterKey CreateGoodKey(IFrequencyAnalysisResult result, IDictionary<char, char> knownChars)
+        {
+            var random = new Random();
+            CharacterKey key = new CharacterKey();
+            foreach (char c in StringUtils.ALPHABET)
+            {
+                if (knownChars.ContainsKey(c))
+                {
+                    key.SetForward(c, knownChars[c]);
+                    continue;
+                }
+                else
+                {
+                    char bestMatchChar = '\0';
+                    double minDifference = double.MaxValue;
+                    double diff;
+                    foreach (char c2 in StringUtils.ALPHABET)
+                    {
+                        string charS = c2.ToString();
+                        diff = Math.Abs((DataTables.Instance.MonogramAnalysis[charS] - result[charS]) / DataTables.Instance.MonogramAnalysis[charS]) + random.NextDouble()/200;
+                        if (diff < minDifference && !knownChars.ContainsKey(c2) && !key.ContainsValue(c2))
+                        {
+                            minDifference = diff;
+                            bestMatchChar = c2;
+                        }
+                    }
+                    key[c] = bestMatchChar;
+                }
+            }
+            return key;
+        }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Breakers.Fitness
 {
-    internal class BigramFitnessFunction : IFittnessFunction
+    internal class BigramFitnessFunction : IFitnessFunction
     {
         private readonly FrequencyAnalysisParamters paramters = new FrequencyAnalysisParamters { NGramLength = 2 };
 

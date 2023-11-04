@@ -72,14 +72,14 @@ namespace CiphersMain.Utils
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static string CipherFormat(string s) => Regex.Replace(s, "[^a-zA-Z0-9]*", "").ToUpper();
+        public static string CipherFormat(string s) => Regex.Replace(s, "[^a-zA-Z]*", "").ToUpper();
         /// <summary>
         /// Format plaintext into text the ciphers are programmed to work with.
         /// Removes all non-letter characters except whitespace and makes everything uppercase.
         /// </summary>
         /// <param name="s"></param>
         /// <returns></returns>
-        public static string CipherFormatKeepWhitespace(string s) => Regex.Replace(s, "[^a-zA-Z0-9\\w]*", "").ToUpper();
+        public static string CipherFormatKeepWhitespace(string s) => Regex.Replace(s, "[^a-zA-Z\\w]*", "").ToUpper();
         /// <summary>
         /// Gets the index of a letter. A is 0.
         /// </summary>

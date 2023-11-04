@@ -55,9 +55,9 @@ public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
         double deviation = 0;
         foreach (var pair in _internalDictionary)
         {
-            deviation += Math.Pow(pair.Value / Total - other[pair.Key], 2);
+            deviation += Math.Abs(pair.Value / Total - other[pair.Key]);
         }
-        return 1 - deviation;
+        return 1 - deviation/2;
     }
 
     public bool ContainsKey(string key) => _internalDictionary.ContainsKey(key);
