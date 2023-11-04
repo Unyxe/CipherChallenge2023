@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="TrieNet.Core" Version="1.0.4" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FrequencyAnalysis\FrequencyAnalysis.csproj" />
   </ItemGroup>
 

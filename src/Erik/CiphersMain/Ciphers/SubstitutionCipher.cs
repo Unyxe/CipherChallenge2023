@@ -38,7 +38,8 @@ namespace CiphersMain.Ciphers
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < plainText.Length; i++)
             {
-                sb.Append(key.GetForward(plainText[i]));
+                if (key.ContainsKey(plainText[i]))
+                    sb.Append(key.GetForward(plainText[i]));
             }
             return sb.ToString();
         }

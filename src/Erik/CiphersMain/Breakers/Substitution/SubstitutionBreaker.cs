@@ -13,7 +13,7 @@ namespace CiphersMain.Breakers.Substitution
     public class SubstitutionBreaker
     {
         private const int _genCount = 50;
-        private const int _keyCount = 10;
+        private const int _keyCount = 20;
 
         public CharacterKey Break(string cipherText) => Break(cipherText, CharacterKey.Empty);
         public CharacterKey Break(string ciphertext, CharacterKey knownKey)

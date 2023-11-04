@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
-    <PackageReference Include="TrieNet.Core" Version="1.0.4" />
   </ItemGroup>
 
   <ItemGroup>

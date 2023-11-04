@@ -15,14 +15,8 @@ namespace FrequencyAnalysis
         /// The length of the Polygram.
         /// </summary>
         public int PolygramLength { get; }
-        /// <summary>
-        /// Returns how closely this analysis result matches with another.
-        /// Only compares letters existing in the current table. To compare all letters, use the static method (TBI).
-        /// </summary>
-        /// <param name="other">The other result to compare with.</param>
-        /// <exception cref="KeyNotFoundException">If current table has a key that <paramref name="other"/> does not.</exception>
-        /// <returns>A value between 0 and 1. 1 represents full match and 0 no match.</returns>
-        public double Compare(IFrequencyAnalysisResult other);
+        
+        public double Compare(string text, int length);
 
         /// <summary>
         /// A user-friendly string representing some data such as the Total, Count and most common occurance in the frequency analysis.

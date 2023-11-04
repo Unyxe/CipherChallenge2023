@@ -12,14 +12,11 @@ namespace FrequencyAnalysis.Utils
     public static class Common
     {
         public const int ALPHABET_LENGTH = 26;
-        public static IEnumerable<string> SplitStringIntoChunks(string toSplit, int length, char paddingChar = ' ', int offset = 1)
+        public static IEnumerable<string> SplitStringIntoChunks(string toSplit, int length)
         {
-            string paddedString = toSplit + new string(paddingChar, length - toSplit.Length % length);
-            for (int i = 0; i < paddedString.Length-length-offset; i+= offset)
+            for (int i = 0; i < toSplit.Length-length; i++)
             {
-                var substring = paddedString.Substring(i, length);
-                if (Regex.IsMatch(substring, @"[^a-zA-Z0-9]*"))
-                    yield return substring;
+                yield return toSplit.Substring(i, length);
             }
         }
         /// <summary>

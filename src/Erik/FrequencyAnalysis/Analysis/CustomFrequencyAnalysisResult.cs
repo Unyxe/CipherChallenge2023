@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace FrequencyAnalysis.Analysis;
-public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
+public class CustomFrequencyAnalysisResult
 {
     private Dictionary<string, int> _internalDictionary;
     private FrequencyAnalysisParamters _internalParameters;
@@ -67,6 +67,6 @@ public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
         value = (double)v / Total;
         return x;
     }
-    public IEnumerator<KeyValuePair<string, double>> GetEnumerator() => _internalDictionary.Select(x => new KeyValuePair<string, double>(x.Key, (double)x.Value / Total)).GetEnumerator();
-    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    // public IEnumerator<KeyValuePair<string, double>> GetEnumerator() => _internalDictionary.Select(x => new KeyValuePair<string, double>(x.Key, (double)x.Value / Total)).GetEnumerator();
+    // IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

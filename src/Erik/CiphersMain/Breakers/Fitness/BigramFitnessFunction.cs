@@ -15,7 +15,7 @@ namespace CiphersMain.Breakers.Fitness
         public double CalculateFitness(string text)
         {
             IFrequencyAnalysisResult textResult = FrequencyAnalyser.AnalyseText(text, paramters);
-            return DataTables.Instance.BigramAnalysis.Compare(textResult);
+            return DataTables.Instance.BigramAnalysis.Compare(text, 2);
         }
     }
 }

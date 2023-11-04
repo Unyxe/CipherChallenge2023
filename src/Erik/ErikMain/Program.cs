@@ -24,7 +24,7 @@ var key = new CharacterKey(StringUtils.ALPHABET);
 
 key.MutateKey();
 
-string cipherT = cipher.Encrypt(texts[0], key);
+string cipherT = cipher.Encrypt(texts[0].PadRight((int)Math.Ceiling((double)texts[0].Length/4)*4, ' '), key);
 string decipherT = cipher.Decrypt(cipherT, key);
 
 Console.WriteLine(DataTables.Instance.BigramAnalysis.Compare(FrequencyAnalyser.AnalyseText(texts[0], new FrequencyAnalysisParamters { NGramLength = 2 })));

@@ -22,9 +22,9 @@ namespace FrequencyAnalysis.Data
             }
         }
         public EnglishFrequencyAnalysisResult MonogramAnalysis { get; }
-        public IFrequencyAnalysisResult BigramAnalysis { get; }
-        public IFrequencyAnalysisResult TrigramAnalysis { get; }
-        public IFrequencyAnalysisResult QuadgramAnalysis { get; }
+        public EnglishFrequencyAnalysisResult BigramAnalysis { get; }
+        public EnglishFrequencyAnalysisResult TrigramAnalysis { get; }
+        public EnglishFrequencyAnalysisResult QuadgramAnalysis { get; }
 
         private Dictionary<string, double> _monogramFrequencies = new Dictionary<string, double>
         {
