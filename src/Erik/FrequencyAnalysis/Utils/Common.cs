@@ -16,7 +16,7 @@ namespace FrequencyAnalysis.Utils
         {
             for (int i = 0; i < toSplit.Length-length; i++)
             {
-                yield return toSplit.Substring(i, length);
+                yield return toSplit.Substring(1, length);
             }
         }
         /// <summary>

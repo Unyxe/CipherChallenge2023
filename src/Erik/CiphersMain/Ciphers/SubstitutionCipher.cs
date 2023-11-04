@@ -31,6 +31,10 @@ namespace CiphersMain.Ciphers
                 sb.Append(key.GetReverse(cipherText[i]));
             }
             return sb.ToString();
+            //return string.Create(cipherText.Length, cipherText, (chars, buffer) =>
+            //  {
+            //      for (int i = 0; i < chars.Length; i++) chars[i] = key.GetReverse(buffer[i]);
+            //  });
         }
         /// <inheritdoc/>
         public string Encrypt(string plainText, CharacterKey key)

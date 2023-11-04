@@ -3,6 +3,7 @@ using CiphersMain.Ciphers;
 using CiphersMain.Keys;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,8 @@ namespace CiphersMain.Breakers.Substitution
 {
     public class SubstitutionGeneticAlgorithm
     {
+        private object _lockObj = new object();
+        private Random _random = new Random();
         private readonly IFitnessFunction _fitnessFunction = new QuadgramFitnessFunction();
         private readonly ICipher<CharacterKey> _subCipher = new SubstitutionCipher();
         private IEnumerable<CharacterKey> CreateKeys(CharacterKey initialKey, int count, CharacterKey knownKey, int randomness)
@@ -25,21 +28,31 @@ namespace CiphersMain.Breakers.Substitution
         private CharacterKey FindBestKey(IEnumerable<CharacterKey> keys, string ciphertext, out double bestFitness)
         {
             CharacterKey bestKey = CharacterKey.Empty;
-            bestFitness = double.MinValue;
-            double fitness;
-            string plainText;
+            double tempBestFitness = double.MinValue;
 
+            //Stopwatch sw = new Stopwatch();
             // for each key, decrypt the ciphertext and select the one that matches the English language the closest
-            foreach (CharacterKey key in keys)
+            //sw.Restart();
+
+            //foreach (var key in keys)
+            Parallel.ForEach(keys, key =>
             {
-                plainText = _subCipher.Decrypt(ciphertext, key);
-                fitness = _fitnessFunction.CalculateFitness(plainText);
-                if (fitness > bestFitness)
+                string decrypted = _subCipher.Decrypt(ciphertext, key);
+                //sw.Restart();
+                double fitness = _fitnessFunction.CalculateFitness(decrypted);
+                //Console.WriteLine(sw.ElapsedTicks);
+                //Console.WriteLine(sw.ElapsedTicks);
+                lock (_lockObj)
                 {
-                    bestFitness = fitness;
-                    bestKey = key;
+                    if (fitness > tempBestFitness)
+                    {
+                        tempBestFitness = fitness;
+                        bestKey = key;
+                    }
                 }
-            }
+            });
+            //Console.WriteLine(sw.ElapsedTicks);
+            bestFitness = tempBestFitness;
             return bestKey;
         }
         public CharacterKey Run(string ciphertext, CharacterKey initialKey, CharacterKey knownKey, int generationCount, int keysPerGeneration)
@@ -50,14 +63,14 @@ namespace CiphersMain.Breakers.Substitution
             CharacterKey newKey;
             for (int i = 0; i < generationCount; i++)
             {
-                keys = CreateKeys(initialKey, keysPerGeneration, knownKey, (int)Math.Clamp((1-Math.Pow(fitness,3))*10,1,13));
+                keys = CreateKeys(initialKey, keysPerGeneration, knownKey, (int)Math.Clamp(300*Math.Pow(2, -20*fitness),2,100));
                 newKey = FindBestKey(keys, ciphertext, out double newfitness);
                 if (newfitness > fitness)
                 {
                     bestKey = newKey;
                     fitness = newfitness;
                 }
-                Console.WriteLine($"{fitness} {newfitness}");
+                Console.WriteLine($"{i}: {fitness} {newfitness}");
             }
             return bestKey;
         }

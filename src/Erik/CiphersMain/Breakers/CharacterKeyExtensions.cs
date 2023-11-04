@@ -19,16 +19,18 @@ namespace CiphersMain.Breakers
         {
             for (int i = 0; i < iterations; i++)
             {
-                char char1 = '\0';
-                char char2 = '\0';
+                int index1 = 0;
+                int index2 = 0;
 
                 // create 2 random valid indices to swap
-                while (char1 == char2 || knownKey.ContainsKey(char1) || knownKey.ContainsKey(char2)){ //TODO: optimise Timur's method
-                    char1 = StringUtils.GetCharFromIndex(key.RandomIndex());
-                    char2 = StringUtils.GetCharFromIndex(key.RandomIndex());
+                while (index1 == index2){ //TODO: optimise Timur's method
+                    index1 = key.RandomIndex();
+                    index2 = key.RandomIndex();
                 }
 
                 // swap the values
+                char char1 = StringUtils.GetCharFromIndex(index1);
+                char char2 = StringUtils.GetCharFromIndex(index2);
                 char tempValue = key[char1];
                 key[char1] = key[char2];
                 key[char2] = tempValue;

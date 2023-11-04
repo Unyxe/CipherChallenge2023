@@ -1,5 +1,6 @@
 ﻿using CiphersMain.Utils;
 using FrequencyAnalysis;
+using FrequencyAnalysis.Analysis;
 using FrequencyAnalysis.Data;
 using System;
 using System.Collections;
@@ -146,7 +147,7 @@ namespace CiphersMain.Keys
         /// <param name="result">The frequency analysis table.</param>
         /// <param name="knownChars">The known character map.</param>
         /// <returns></returns>
-        public static CharacterKey CreateGoodKey(IFrequencyAnalysisResult result, IDictionary<char, char> knownChars)
+        public static CharacterKey CreateGoodKey(CustomFrequencyAnalysisResult result, IDictionary<char, char> knownChars)
         {
             var random = new Random();
             CharacterKey key = new CharacterKey();
@@ -165,7 +166,7 @@ namespace CiphersMain.Keys
                     foreach (char c2 in StringUtils.ALPHABET)
                     {
                         string charS = c2.ToString();
-                        diff = Math.Abs((DataTables.Instance.MonogramAnalysis[charS] - result[charS]) / DataTables.Instance.MonogramAnalysis[charS]) + random.NextDouble()/200;
+                        diff = Math.Abs((DataTables.Instance.MonogramAnalysis[charS] - result[charS]) / DataTables.Instance.MonogramAnalysis[charS]) + random.NextDouble()/2000;
                         if (diff < minDifference && !knownChars.ContainsKey(c2) && !key.ContainsValue(c2))
                         {
                             minDifference = diff;

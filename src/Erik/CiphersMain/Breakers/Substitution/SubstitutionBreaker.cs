@@ -12,8 +12,8 @@ namespace CiphersMain.Breakers.Substitution
 {
     public class SubstitutionBreaker
     {
-        private const int _genCount = 50;
-        private const int _keyCount = 20;
+        private const int _genCount = 100;
+        private const int _keyCount = 10000;
 
         public CharacterKey Break(string cipherText) => Break(cipherText, CharacterKey.Empty);
         public CharacterKey Break(string ciphertext, CharacterKey knownKey)

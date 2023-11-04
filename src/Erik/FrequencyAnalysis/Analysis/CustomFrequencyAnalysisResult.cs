@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace FrequencyAnalysis.Analysis;
-public class CustomFrequencyAnalysisResult
+public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
 {
     private Dictionary<string, int> _internalDictionary;
     private FrequencyAnalysisParamters _internalParameters;
@@ -59,6 +59,7 @@ public class CustomFrequencyAnalysisResult
         }
         return 1 - deviation/2;
     }
+    public double Compare(string text, int length) => throw new NotImplementedException();
 
     public bool ContainsKey(string key) => _internalDictionary.ContainsKey(key);
     public bool TryGetValue(string key, [MaybeNullWhen(false)] out double value)
@@ -67,6 +68,6 @@ public class CustomFrequencyAnalysisResult
         value = (double)v / Total;
         return x;
     }
-    // public IEnumerator<KeyValuePair<string, double>> GetEnumerator() => _internalDictionary.Select(x => new KeyValuePair<string, double>(x.Key, (double)x.Value / Total)).GetEnumerator();
-    // IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    public IEnumerator<KeyValuePair<string, double>> GetEnumerator() => _internalDictionary.Select(x => new KeyValuePair<string, double>(x.Key, (double)x.Value / Total)).GetEnumerator();
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 }

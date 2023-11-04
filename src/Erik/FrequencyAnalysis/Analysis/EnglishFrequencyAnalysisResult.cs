@@ -45,15 +45,16 @@ namespace FrequencyAnalysis
         }
         public double Compare(string text, int polygramLength)
         {
-            double correlation = 0;
-
-            correlation = Common.SplitStringIntoChunks(text, polygramLength).Sum(key =>
+            double sum = 0;
+            for (int i = 0; i < text.Length - polygramLength; i++)
             {
-                _internalDictionary.TryGetValue(key, out double value);
-                value += 1;
-                return Math.Log(value);
-            });
-            return correlation;
+                string slice = text.Substring(i, polygramLength);
+                if (slice.Contains(' '))
+                    continue;
+                _internalDictionary.TryGetValue(slice, out double value);
+                sum += Math.Log(value + 1);
+            }
+            return sum;
         }
 
         public bool ContainsKey(string key) => _internalDictionary.ContainsKey(key);
