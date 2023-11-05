@@ -55,22 +55,39 @@ namespace CiphersMain.Breakers.Substitution
             bestFitness = tempBestFitness;
             return bestKey;
         }
-        public CharacterKey Run(string ciphertext, CharacterKey initialKey, CharacterKey knownKey, int generationCount, int keysPerGeneration)
+        public CharacterKey Run(BreakerParameters parameters, int threadID)
         {
-            CharacterKey bestKey = CharacterKey.Empty;
+            CharacterKey bestKey = new(parameters.InitialKey);
             IEnumerable<CharacterKey> keys;
             double fitness = double.MinValue;
             CharacterKey newKey;
-            for (int i = 0; i < generationCount; i++)
+            double timeOnKey = 0;
+            int randomness = 3;
+            for (int i = 0; i < parameters.MaxGenerations && fitness< parameters.Acceptance; i++)
             {
-                keys = CreateKeys(initialKey, keysPerGeneration, knownKey, (int)Math.Clamp(300*Math.Pow(2, -20*fitness),2,100));
-                newKey = FindBestKey(keys, ciphertext, out double newfitness);
+                // reset key if we're at a local min
+                if (timeOnKey > 5000)
+                {
+                    timeOnKey = 0;
+                    bestKey = new(parameters.InitialKey);
+                    continue;
+                }
+
+
+                keys = CreateKeys(bestKey, parameters.KeysPerGeneration, parameters.KnownKey, randomness);
+                newKey = FindBestKey(keys, parameters.Ciphertext, out double newfitness);
                 if (newfitness > fitness)
                 {
+                    timeOnKey = 0;
                     bestKey = newKey;
                     fitness = newfitness;
                 }
-                Console.WriteLine($"{i}: {fitness} {newfitness}");
+                else
+                {
+                    timeOnKey++;
+                }
+                if (i%200==0 && fitness/ parameters .Acceptance> 0.75)
+                    Console.WriteLine($"Thread: {threadID} Gen:{i} Fitness: {fitness} {newfitness} {timeOnKey}");
             }
             return bestKey;
         }

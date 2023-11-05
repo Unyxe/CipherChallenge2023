@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CiphersMain.Keys;
-using CiphersMain.Utils;
+using ErikCommon;
 
 namespace CiphersMain.Ciphers
 {
@@ -18,8 +18,8 @@ namespace CiphersMain.Ciphers
         public static CharacterKey CreateCaesarKey(int shift)
         {
             CharacterKey key = new CharacterKey();
-            for (int i = 0; i < StringUtils.ALPHABET_LENGTH; i++)
-                key.SetForward(StringUtils.GetCharFromIndex(i), StringUtils.GetCharFromIndex((i + shift) % StringUtils.ALPHABET_LENGTH));
+            for (int i = 0; i < Utilities.ALPHABET_LENGTH; i++)
+                key.SetForward(Utilities.GetCharFromIndex(i), Utilities.GetCharFromIndex((i + shift) % Utilities.ALPHABET_LENGTH));
             return key;
         }
         /// <inheritdoc/>

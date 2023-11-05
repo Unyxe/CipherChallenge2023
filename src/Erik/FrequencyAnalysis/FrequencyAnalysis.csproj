@@ -11,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ErikCommon\ErikCommon.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Data\Quadgram.csv">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

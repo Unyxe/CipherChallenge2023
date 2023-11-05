@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FrequencyAnalysis.Analysis;
-using FrequencyAnalysis.Utils;
+﻿using FrequencyAnalysis.Analysis;
+using ErikCommon;
 
 namespace FrequencyAnalysis
 {
@@ -21,7 +15,7 @@ namespace FrequencyAnalysis
         public static CustomFrequencyAnalysisResult AnalyseText(string text, FrequencyAnalysisParamters param)
         {
             Dictionary<string, int> counts = new Dictionary<string, int>();
-            foreach (var block in Common.SplitStringIntoChunks(text, param.NGramLength))
+            foreach (var block in Utilities.SplitStringIntoChunks(text, param.NGramLength))
             {
                 if (counts.ContainsKey(block))
                     counts[block]++;

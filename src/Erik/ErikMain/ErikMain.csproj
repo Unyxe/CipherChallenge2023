@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CiphersMain\CiphersMain.csproj" />
+    <ProjectReference Include="..\ErikCommon\ErikCommon.csproj" />
+    <ProjectReference Include="..\FileOutput\FileOutput.csproj" />
     <ProjectReference Include="..\FrequencyAnalysis\FrequencyAnalysis.csproj" />
   </ItemGroup>
 

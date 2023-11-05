@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrequencyAnalysis", "Freque
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CiphersMain", "CiphersMain\CiphersMain.csproj", "{6EC8E762-D3EF-4ADD-9B41-EB0ECF48BF04}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErikCommon", "ErikCommon\ErikCommon.csproj", "{5759FCC8-D91A-4EA1-A20A-D37F2A701B0A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileOutput", "FileOutput\FileOutput.csproj", "{4B914573-496A-493F-BD8B-8749FA13B227}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{6EC8E762-D3EF-4ADD-9B41-EB0ECF48BF04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EC8E762-D3EF-4ADD-9B41-EB0ECF48BF04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EC8E762-D3EF-4ADD-9B41-EB0ECF48BF04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5759FCC8-D91A-4EA1-A20A-D37F2A701B0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5759FCC8-D91A-4EA1-A20A-D37F2A701B0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5759FCC8-D91A-4EA1-A20A-D37F2A701B0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5759FCC8-D91A-4EA1-A20A-D37F2A701B0A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4B914573-496A-493F-BD8B-8749FA13B227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B914573-496A-493F-BD8B-8749FA13B227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B914573-496A-493F-BD8B-8749FA13B227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B914573-496A-493F-BD8B-8749FA13B227}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

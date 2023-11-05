@@ -2,41 +2,47 @@
 using CiphersMain.Breakers;
 using CiphersMain.Ciphers;
 using CiphersMain.Keys;
-using CiphersMain.Utils;
-using FrequencyAnalysis;
+using ErikCommon;
 using FrequencyAnalysis.Data;
 using System.Diagnostics;
 
+string outputPath = @".\Output\test.json";
+
+// Load example texts
 string path = @".\ExampleText.txt";
 List<string> texts = new List<string>{ };
 
 if (File.Exists(path))
-    texts.Add(StringUtils.CipherFormat(File.ReadAllText(path)));
-texts.Add(StringUtils.CipherFormat(@"The Mighty Yeet"));
+    texts.Add(Utilities.CipherFormat(File.ReadAllText(path).Substring(0,1600)));
+texts.Add(Utilities.CipherFormat(@"The Mighty Yeet"));
 
+
+// start SW
 Stopwatch sw = new Stopwatch();
 sw.Start();
 
-
-
+// initialise
 var cipher = new SubstitutionCipher();
-var key = new CharacterKey(StringUtils.ALPHABET);
-
+var key = new CharacterKey(Utilities.ALPHABET);
+var breaker = new SubstitutionBreaker();
 key.MutateKey();
 
+// get text to work with
 string text = texts[0].PadRight((int)Math.Ceiling((double)texts[0].Length / 4) * 4, ' ');
 
+// encrypt
 string cipherT = cipher.Encrypt(text, key);
-string decipherT = cipher.Decrypt(cipherT, key);
 
-Console.WriteLine(DataTables.Instance.QuadgramAnalysis.Compare(text, 4));
+// Get match of the text, this would usually be a value of the english language
+double textMatch = DataTables.Instance.QuadgramAnalysis.Compare(text, 4);
 
-//Console.WriteLine(decipherT);
+// break the cipher
+var result = breaker.Break(cipherT, textMatch);
 
-var breaker = new SubstitutionBreaker();
-var result = breaker.Break(cipherT);
+Console.WriteLine("\nFound key");
+Utilities.WriteEnumerable(result);
+Utilities.WriteEnumerable(key);
 
-StringUtils.WriteEnumerable(result);
-StringUtils.WriteEnumerable(key);
+FileOutput.JSONWriter.WriteToFile(outputPath, cipherT, key.ToString(), cipher.Decrypt(cipherT, key), "Substitution");
 
 Console.WriteLine(sw.ElapsedMilliseconds);

@@ -1,4 +1,4 @@
-﻿using CiphersMain.Utils;
+﻿using ErikCommon;
 using FrequencyAnalysis;
 using FrequencyAnalysis.Analysis;
 using FrequencyAnalysis.Data;
@@ -37,7 +37,8 @@ namespace CiphersMain.Keys
         public CharacterKey(string key)
         {
             for (int i = 0; i < key.Length; i++)
-                SetForward(StringUtils.GetCharFromIndex(i), key[i]);
+                SetForward(Utilities.GetCharFromIndex(i), key[i]);
+            _randomSource = new Random(0);
         }
         /// <summary>
         /// Creates a <see cref="CharacterKey"/> from an array.
@@ -45,7 +46,8 @@ namespace CiphersMain.Keys
         public CharacterKey(char[] key)
         {
             for (int i = 0; i < key.Length; i++)
-                SetForward(StringUtils.GetCharFromIndex(i), key[i]);
+                SetForward(Utilities.GetCharFromIndex(i), key[i]);
+            _randomSource = new Random(0);
         }
         /// <summary>
         /// Creates a <see cref="CharacterKey"/> from a known key (copies it).
@@ -65,7 +67,7 @@ namespace CiphersMain.Keys
         /// Returns a random value between 0 and 26 (exclusive).
         /// </summary>
         /// <returns></returns>
-        public int RandomIndex() => _randomSource.Next(StringUtils.ALPHABET_LENGTH);
+        public int RandomIndex() => _randomSource.Next(Utilities.ALPHABET_LENGTH);
         /// <summary>
         /// The forward getter for values.
         /// </summary>
@@ -108,7 +110,7 @@ namespace CiphersMain.Keys
             }
             return false;
         }
-
+        public override int GetHashCode() => _forward.GetHashCode();
         public bool TryGetValue(char key, [MaybeNullWhen(false)] out char value) => _forward.TryGetValue(key, out value);
         public void Add(KeyValuePair<char, char> item) =>
             SetForward(item.Key, item.Value);
@@ -125,7 +127,7 @@ namespace CiphersMain.Keys
         IEnumerator<KeyValuePair<char, char>> IEnumerable<KeyValuePair<char, char>>.GetEnumerator() => _forward.GetEnumerator();
         public IEnumerator GetEnumerator() => _forward.GetEnumerator();
 
-
+        public override string ToString() => string.Join(", ", Values);
         public static CharacterKey Empty { get; } = new CharacterKey();
 
         /// <summary>
@@ -151,7 +153,7 @@ namespace CiphersMain.Keys
         {
             var random = new Random();
             CharacterKey key = new CharacterKey();
-            foreach (char c in StringUtils.ALPHABET)
+            foreach (char c in Utilities.ALPHABET)
             {
                 if (knownChars.ContainsKey(c))
                 {
@@ -163,10 +165,10 @@ namespace CiphersMain.Keys
                     char bestMatchChar = '\0';
                     double minDifference = double.MaxValue;
                     double diff;
-                    foreach (char c2 in StringUtils.ALPHABET)
+                    foreach (char c2 in Utilities.ALPHABET)
                     {
                         string charS = c2.ToString();
-                        diff = Math.Abs((DataTables.Instance.MonogramAnalysis[charS] - result[charS]) / DataTables.Instance.MonogramAnalysis[charS]) + random.NextDouble()/2000;
+                        diff = Math.Abs((DataTables.Instance.MonogramAnalysis[charS] - result[charS]) / DataTables.Instance.MonogramAnalysis[charS]);
                         if (diff < minDifference && !knownChars.ContainsKey(c2) && !key.ContainsValue(c2))
                         {
                             minDifference = diff;
