@@ -59,7 +59,7 @@ public class CustomFrequencyAnalysisResult : IFrequencyAnalysisResult
         }
         return 1 - deviation/2;
     }
-    public double Compare(string text, int length) => throw new NotImplementedException();
+    public double Compare(string text) => throw new NotImplementedException();
 
     public bool ContainsKey(string key) => _internalDictionary.ContainsKey(key);
     public bool TryGetValue(string key, [MaybeNullWhen(false)] out double value)

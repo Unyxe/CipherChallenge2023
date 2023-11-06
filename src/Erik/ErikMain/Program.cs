@@ -31,18 +31,17 @@ key.MutateKey();
 string text = texts[0].PadRight((int)Math.Ceiling((double)texts[0].Length / 4) * 4, ' ');
 
 // encrypt
-string cipherT = cipher.Encrypt(text, key);
 
 // Get match of the text, this would usually be a value of the english language
-double textMatch = DataTables.Instance.QuadgramAnalysis.Compare(text, 4);
+double textMatch = 1;
 
 // break the cipher
-var result = breaker.Break(cipherT, textMatch);
+var result = breaker.Break(text, textMatch);
 
 Console.WriteLine("\nFound key");
 Utilities.WriteEnumerable(result);
 Utilities.WriteEnumerable(key);
 
-FileOutput.JSONWriter.WriteToFile(outputPath, cipherT, key.ToString(), cipher.Decrypt(cipherT, key), "Substitution");
+FileOutput.JSONWriter.WriteToFile(outputPath, text, key.ToString(), cipher.Decrypt(text, key), "Substitution");
 
 Console.WriteLine(sw.ElapsedMilliseconds);

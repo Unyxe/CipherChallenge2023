@@ -8,13 +8,15 @@ using FrequencyAnalysis.Data;
 
 namespace CiphersMain.Breakers.Fitness
 {
-    public class MonogramFitnessFunction : IFitnessFunction
+    /// <summary>
+    /// Determines how "good" a deciphered text is based on single-letter frequency analysis.
+    /// </summary>
+    internal class MonogramFitnessFunction : IFitnessFunction
     {
-        private readonly FrequencyAnalysisParamters paramters = new FrequencyAnalysisParamters { NGramLength=1};
-
+        /// <inheritdoc/>
         public double CalculateFitness(string text)
         {
-            return DataTables.Instance.MonogramAnalysis.Compare(text, 1);
+            return DataTables.Instance.MonogramAnalysis.Compare(text);
         }
     }
 }

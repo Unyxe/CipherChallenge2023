@@ -26,6 +26,7 @@ namespace FrequencyAnalysis
             _internalDictionary = frequencies;
             _internalParameters = p;
         }
+        /// <inheritdoc/>
         public double Compare(IFrequencyAnalysisResult other)
         {
             double deviation = 0;
@@ -35,12 +36,13 @@ namespace FrequencyAnalysis
             }
             return 1 - deviation/2;
         }
-        public double Compare(string text, int polygramLength)
+        /// <inheritdoc/>
+        public double Compare(string text)
         {
             double sum = 0;
-            for (int i = 0; i < text.Length - polygramLength; i++)
+            for (int i = 0; i < text.Length - PolygramLength; i++)
             {
-                string slice = text.Substring(i, polygramLength);
+                string slice = text.Substring(i, PolygramLength);
                 if (slice.Contains(' '))
                     continue;
                 _internalDictionary.TryGetValue(slice, out double value);

@@ -8,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Breakers.Fitness
 {
+    /// <summary>
+    /// Determines how "good" a deciphered text is based on quadgram frequency analysis.
+    /// </summary>
     internal class QuadgramFitnessFunction : IFitnessFunction
     {
-        private readonly FrequencyAnalysisParamters paramters = new FrequencyAnalysisParamters { NGramLength = 4 };
-
+        /// <inheritdoc/>
         public double CalculateFitness(string text)
         {
-            return DataTables.Instance.QuadgramAnalysis.Compare(text, 4);
+            return DataTables.Instance.QuadgramAnalysis.Compare(text);
         }
     }
 }

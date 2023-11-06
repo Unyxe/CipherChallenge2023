@@ -19,13 +19,9 @@ namespace CiphersMain.Keys
         private Dictionary<char, char> _reverse { get; set; } = new Dictionary<char, char>();
 
         public ICollection<char> Keys => _forward.Keys;
-
         public ICollection<char> Values => _forward.Values;
-
         public int Count => _forward.Count;
-
         public bool IsReadOnly => false;
-
         public char this[char key] { get => _forward[key]; set => SetForward(key, value); }
         /// <summary>
         /// Creates an empty<see cref="CharacterKey"/>.
@@ -96,7 +92,6 @@ namespace CiphersMain.Keys
         /// <param name="key"></param>
         /// <param name="value"></param>
         public void SetReverse(char key, char value) => SetForward(value, key);
-
         public void Add(char key, char value) => SetForward(key, value);
         public bool ContainsKey(char key) => _forward.ContainsKey(key);
         public bool ContainsValue(char value) => _reverse.ContainsKey(value);

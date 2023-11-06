@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Breakers.Fitness
 {
+    /// <summary>
+    /// Determines how "good" a deciphered text is based on trigram frequency analysis.
+    /// </summary>
     internal class TrigramFitnessFunction : IFitnessFunction
     {
+        ///<inheritdoc/>
         public double CalculateFitness(string text)
         {
-            return DataTables.Instance.QuadgramAnalysis.Compare(text, 3);
+            return DataTables.Instance.QuadgramAnalysis.Compare(text);
         }
     }
 }
