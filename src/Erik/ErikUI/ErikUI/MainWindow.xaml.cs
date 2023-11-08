@@ -29,33 +29,39 @@ namespace ErikUI
         {
             InitializeComponent();
         }
+        private TextBox[] _keyInputs;
         private void LoadKeyField()
         {
-            StackPanel container = new StackPanel { Orientation=Orientation.Horizontal };
+        //    var container = new StackPanel { Orientation=Orientation.Horizontal };
+        //    _keyInputs = new TextBox[26];
+        //    for (int i = 0; i < 26; i++)
+        //    {
+        //        string letter = Utilities.GetCharFromIndex(i).ToString();
+        //        StackPanel subContainer = new StackPanel
+        //        {
+        //            Margin=new Thickness(1),
+        //            Width = 22,
+        //            VerticalAlignment = VerticalAlignment.Center,
+        //        };
+        //        TextBlock text = new TextBlock { Text = $"{i}:{letter}", HorizontalAlignment = HorizontalAlignment.Center, FontSize=9 };
+        //        TextBox textBox = new TextBox
+        //        {
+        //            TextAlignment = TextAlignment.Center,
+        //            HorizontalAlignment = HorizontalAlignment.Center,
+        //            Width = 16,
+        //            MaxLength = 1,
+        //            Text = letter
+        //        };
+                
 
-            for (int i = 0; i < 26; i++)
-            {
-                string letter = Utilities.GetCharFromIndex(i).ToString();
-                StackPanel subContainer = new StackPanel
-                {
-                    Margin=new Thickness(1),
-                    Width = 25,
-                    VerticalAlignment = VerticalAlignment.Center,
-                };
-                TextBlock text = new TextBlock { Text = $"{i}{letter}", HorizontalAlignment = HorizontalAlignment.Center, FontSize=9 };
-                TextBox textBox = new TextBox
-                {
-                    HorizontalAlignment = HorizontalAlignment.Center,
-                    Width = 20,
-                    MaxLength = 1,
-                    Text = letter
-                };
-                subContainer.Children.Add(text);
-                subContainer.Children.Add(textBox);
-                container.Children.Add(subContainer);
-            }
 
-            spKey.Children.Add(container);
+        //        _keyInputs[i] = textBox;
+        //        subContainer.Children.Add(text);
+        //        subContainer.Children.Add(textBox);
+        //        container.Children.Add(subContainer);
+        //    }
+
+        //    spKey.Children.Add(container);
         }
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -64,7 +70,8 @@ namespace ErikUI
 
         private void btDecrypt_Click(object sender, RoutedEventArgs e)
         {
-            
+            char[] key = new char[26];
+            Logic.Decrypt();
         }
     }
 }

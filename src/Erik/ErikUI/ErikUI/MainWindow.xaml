@@ -5,30 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ErikUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded">
+        Title="MainWindow" Height="450" Width="1000" Loaded="Window_Loaded">
+    <Window.Style>
+        <Style TargetType="{x:Type Window}">
+            <Setter Property="FontFamily" Value="Consolas"/>
+        </Style>
+    </Window.Style>
     <Window.DataContext>
         <local:MainWindowViewModel/>
     </Window.DataContext>
+    <Window.InputBindings>
+        <KeyBinding Command="{Binding DecryptCommand}" Key="D" Modifiers="Ctrl"/>
+    </Window.InputBindings>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="200"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <!--0,0-->
-        <TextBox x:Name="tbxCiphertext" Margin="10"/>
+        <TextBox x:Name="tbxCiphertext" Margin="10" Text="{Binding Ciphertext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!--1,0-->
-        <TextBox Grid.Column="1" x:Name="tbxPlaintext" Margin="10"/>
+        <TextBox Grid.Column="1" x:Name="tbxPlaintext" Margin="10" Text="{Binding Plaintext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!--0,1-->
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="5">
             <StackPanel x:Name="spKey" Orientation="Horizontal" VerticalAlignment="Top">
                 <TextBlock Text="Encryption Key: "/>
-                <!--Key input field goes here-->
+                <ItemsControl ItemsSource="{Binding KeyCharacters}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="KeyUIProperties">
+                            <StackPanel Margin="2,0">
+                                <TextBlock Text="{Binding Header}" FontSize="9"/>
+                                <TextBox Text="{Binding Text, Mode=TwoWay}" Width="16" TextAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
             </StackPanel>
-            <Button Content="Decrypt (Ctrl+D)" x:Name="btDecrypt" Width="100" HorizontalAlignment="Left" Margin="0,5" Click="btDecrypt_Click"/>
+            <Button Content="Decrypt (Ctrl+D)" x:Name="btDecrypt" Padding="5,2" HorizontalAlignment="Left" Margin="0,5" Click="btDecrypt_Click"/>
         </StackPanel>
         
     </Grid>

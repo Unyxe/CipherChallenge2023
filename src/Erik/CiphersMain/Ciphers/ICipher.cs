@@ -14,11 +14,11 @@ public interface ICipher<T>
     /// </summary>
     /// <param name="plainText"></param>
     /// <returns>The encrypted text.</returns>
-    public string Encrypt(string plainText);
+    public string Encrypt(string plainText, T key);
     /// <summary>
     /// Decrypts the text.
     /// </summary>
     /// <param name="cipherText"></param>
     /// <returns>The decrypted text.</returns>
-    public string Decrypt(string cipherText);
+    public string Decrypt(string cipherText, T key);
 }

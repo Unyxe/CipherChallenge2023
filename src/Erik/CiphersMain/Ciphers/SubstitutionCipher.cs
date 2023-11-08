@@ -16,7 +16,10 @@ namespace CiphersMain.Ciphers
         {
             Key = key;
         }
-
+        public SubstitutionCipher()
+        {
+            Key = new CharacterKey(Utilities.ALPHABET);
+        }
 
         /// <summary>
         /// Creates a substitution key for a Caeser (shift) cipher.
@@ -30,13 +33,14 @@ namespace CiphersMain.Ciphers
                 newKey.SetForward(Utilities.GetCharFromIndex(i), Utilities.GetCharFromIndex((i + shift) % Utilities.ALPHABET_LENGTH));
             return newKey;
         }
+        public string Decrypt(string cipherText)=> Decrypt(cipherText, Key);
         /// <inheritdoc/>
-        public string Decrypt(string cipherText)
+        public string Decrypt(string cipherText, CharacterKey key)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < cipherText.Length; i++)
             {
-                sb.Append(Key.GetReverse(cipherText[i]));
+                sb.Append(key.GetReverse(cipherText[i]));
             }
             return sb.ToString();
             //return string.Create(cipherText.Length, cipherText, (chars, buffer) =>
@@ -44,8 +48,9 @@ namespace CiphersMain.Ciphers
             //      for (int i = 0; i < chars.Length; i++) chars[i] = key.GetReverse(buffer[i]);
             //  });
         }
+        public string Encrypt(string plainText) => Decrypt(plainText, Key);
         /// <inheritdoc/>
-        public string Encrypt(string plainText)
+        public string Encrypt(string plainText, CharacterKey key)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < plainText.Length; i++)
