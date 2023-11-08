@@ -10,6 +10,14 @@ namespace CiphersMain.Ciphers
 {
     public class SubstitutionCipher : ICipher<CharacterKey>
     {
+        public CharacterKey Key { get; set; }
+
+        public SubstitutionCipher(CharacterKey key)
+        {
+            Key = key;
+        }
+
+
         /// <summary>
         /// Creates a substitution key for a Caeser (shift) cipher.
         /// </summary>
@@ -17,18 +25,18 @@ namespace CiphersMain.Ciphers
         /// <returns>The Caeser cipher key.</returns>
         public static CharacterKey CreateCaesarKey(int shift)
         {
-            CharacterKey key = new CharacterKey();
+            CharacterKey newKey = new CharacterKey();
             for (int i = 0; i < Utilities.ALPHABET_LENGTH; i++)
-                key.SetForward(Utilities.GetCharFromIndex(i), Utilities.GetCharFromIndex((i + shift) % Utilities.ALPHABET_LENGTH));
-            return key;
+                newKey.SetForward(Utilities.GetCharFromIndex(i), Utilities.GetCharFromIndex((i + shift) % Utilities.ALPHABET_LENGTH));
+            return newKey;
         }
         /// <inheritdoc/>
-        public string Decrypt(string cipherText, CharacterKey key)
+        public string Decrypt(string cipherText)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < cipherText.Length; i++)
             {
-                sb.Append(key.GetReverse(cipherText[i]));
+                sb.Append(Key.GetReverse(cipherText[i]));
             }
             return sb.ToString();
             //return string.Create(cipherText.Length, cipherText, (chars, buffer) =>
@@ -37,13 +45,13 @@ namespace CiphersMain.Ciphers
             //  });
         }
         /// <inheritdoc/>
-        public string Encrypt(string plainText, CharacterKey key)
+        public string Encrypt(string plainText)
         {
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < plainText.Length; i++)
             {
-                if (key.ContainsKey(plainText[i]))
-                    sb.Append(key.GetForward(plainText[i]));
+                if (Key.ContainsKey(plainText[i]))
+                    sb.Append(Key.GetForward(plainText[i]));
             }
             return sb.ToString();
         }
