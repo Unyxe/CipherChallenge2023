@@ -42,6 +42,7 @@ namespace ErikUI
             }
         }
         private string _ciphertext = "";
+
         public string Ciphertext
         {
             get { return _ciphertext; }
@@ -85,21 +86,41 @@ namespace ErikUI
             Ciphertext = "The quick brown fox jumps over the lazy dog";
 #endif
         }
+
+
+        public void ResetKey()
+        {
+            KeyCharacters = new ObservableCollection<KeyUIProperties>(Enumerable.Range(0, 26).Select(i => new KeyUIProperties(i)));
+            RaisePropertyChanged(nameof(KeyCharacters));
+        }
         public void Decrypt()
         {
-            Plaintext = "";
             var key = new CharacterKey(KeyCharacters.Select(x => x.Character).ToArray());
+            Decrypt(key);
+        }
+        public void Decrypt(CharacterKey key)
+        {
+            Plaintext = "";
             if (_validateKey(key))
             {
                 var cipher = new SubstitutionCipher(key);
-                Plaintext = cipher.Decrypt(Utilities.CipherFormatKeepWhitespace(Ciphertext));
+                Plaintext = cipher.Decrypt(Ciphertext.ToUpper());
             }
             _updateFrequencyAnalysis();
+        }
+        public void GenKey()
+        {
+            var key = CharacterKey.CreateGoodKey(Utilities.CipherFormat(Ciphertext));
+            for (int i = 0; i < key.Count; i++)
+            {
+                KeyCharacters[i].Character = key[Utilities.GetCharFromIndex(i)];
+            }
+            RaisePropertyChanged(nameof(KeyCharacters));
         }
         public MainWindowViewModel()
         {
             _frequencyAnalysis = new ObservableCollection<FreqAnalysisLetter>();
-            _keyCharacters = new ObservableCollection<KeyUIProperties>(Enumerable.Range(0,26).Select(i => new KeyUIProperties(i)));
+            ResetKey();
         }
     }
 }

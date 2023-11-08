@@ -40,5 +40,12 @@ namespace ErikUI
             Logic.Decrypt();
             lvFreqAnalysis.Items.Refresh();
         }
+
+        private void btGenKey_Click(object sender, RoutedEventArgs e)
+        {
+            Logic.GenKey();
+        }
+
+        private void btResetKey_Click(object sender, RoutedEventArgs e) => Logic.ResetKey();
     }
 }

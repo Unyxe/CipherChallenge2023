@@ -10,7 +10,16 @@ namespace ErikUI
     internal class KeyUIProperties : ObservableObject
     {
         public int Index { get; set; }
-        public char Character = '\0';
+        private char _character = '\0';
+
+        public char Character
+        {
+            get { return _character; }
+            set { Set(ref _character, value);
+                RaisePropertyChanged(nameof(Text));
+            }
+        }
+
         public string Header { get => $"{Index}:{Utilities.GetCharFromIndex(Index)}"; }
         public string Text
         {
@@ -22,7 +31,8 @@ namespace ErikUI
                 string newValue = Utilities.CipherFormat(value.Substring(value.Length - 1));
                 if (!string.IsNullOrEmpty(newValue))
                 {
-                    Set(ref Character, newValue[0]);
+                    Set(ref _character, newValue[0]);
+                    RaisePropertyChanged(nameof(Character));
                 }
             }
         }

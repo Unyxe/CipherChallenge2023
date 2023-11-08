@@ -148,31 +148,42 @@ namespace CiphersMain.Keys
         {
             var random = new Random();
             CharacterKey key = new CharacterKey();
-            foreach (char c in Utilities.ALPHABET)
+            int c = 0;
+            var dict = result.ToDictionary(x => x.Key, x => x.Value);
+            foreach (var item in Utilities.ALPHABET_BY_FREQUENCY)
             {
-                if (knownChars.ContainsKey(c))
-                {
-                    key.SetForward(c, knownChars[c]);
-                    continue;
-                }
-                else
-                {
-                    char bestMatchChar = '\0';
-                    double minDifference = double.MaxValue;
-                    double diff;
-                    foreach (char c2 in Utilities.ALPHABET)
-                    {
-                        string charS = c2.ToString();
-                        diff = Math.Abs((DataTables.Instance.MonogramAnalysis[charS] - result[charS]) / DataTables.Instance.MonogramAnalysis[charS]);
-                        if (diff < minDifference && !knownChars.ContainsKey(c2) && !key.ContainsValue(c2))
-                        {
-                            minDifference = diff;
-                            bestMatchChar = c2;
-                        }
-                    }
-                    key[c] = bestMatchChar;
-                }
+                if (!dict.ContainsKey(item.ToString()))
+                    dict[item.ToString()] = 0;
             }
+            foreach (var item in dict.OrderByDescending(x => x.Value))
+            {
+                key[item.Key[0]] = Utilities.ALPHABET_BY_FREQUENCY[c++];
+            }
+            //foreach (char c in Utilities.ALPHABET)
+            //{
+            //    if (knownChars.ContainsKey(c))
+            //    {
+            //        key.SetForward(c, knownChars[c]);
+            //        continue;
+            //    }
+            //    else
+            //    {
+            //        char bestMatchChar = '\0';
+            //        double minDifference = double.MaxValue;
+            //        double diff;
+            //        foreach (char c2 in Utilities.ALPHABET)
+            //        {
+            //            string charS = c2.ToString();
+            //            diff = Math.Abs((DataTables.Instance.MonogramAnalysis[charS] - result[charS]) / DataTables.Instance.MonogramAnalysis[charS]);
+            //            if (diff < minDifference && !knownChars.ContainsKey(c2) && !key.ContainsValue(c2))
+            //            {
+            //                minDifference = diff;
+            //                bestMatchChar = c2;
+            //            }
+            //        }
+            //        key[c] = bestMatchChar;
+            //    }
+            //}
             return key;
         }
     }
