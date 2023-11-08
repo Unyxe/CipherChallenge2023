@@ -3,9 +3,9 @@
 namespace ErikCommon;
 public class Utilities
 {
-    public static readonly string[] ALPHABTE_BY_FREQUENCY = new string[]
+    public static readonly char[] ALPHABET_BY_FREQUENCY = new char[]
 {
-    "E", "T", "A", "O", "I", "N", "S", "R", "H", "L", "D", "C", "U", "M", "W", "F", "G", "Y", "P", "B", "V", "K", "J", "X", "Q", "Z"
+    'E', 'T', 'A', 'O', 'I', 'N', 'S', 'R', 'H', 'L', 'D', 'C', 'U', 'M', 'W', 'F', 'G', 'Y', 'P', 'B', 'V', 'K', 'J', 'X', 'Q', 'Z'
 };
     /// <summary>
     /// The alphabet in caps, from A-Z.
@@ -27,7 +27,7 @@ public class Utilities
     {
         for (int i = 0; i < toSplit.Length - length; i++)
         {
-            yield return toSplit.Substring(1, length);
+            yield return toSplit.Substring(i, length);
         }
     }
     /// <summary>
@@ -72,7 +72,7 @@ public class Utilities
     /// </summary>
     /// <param name="s"></param>
     /// <returns></returns>
-    public static string CipherFormatKeepWhitespace(string s) => Regex.Replace(s, "[^a-zA-Z\\w]*", "").ToUpper();
+    public static string CipherFormatKeepWhitespace(string s) => Regex.Replace(s, "[^a-zA-Z\\s]*", "").ToUpper();
     /// <summary>
     /// Gets the index of a letter. A is 0.
     /// </summary>

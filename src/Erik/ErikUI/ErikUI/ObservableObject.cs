@@ -16,5 +16,9 @@ namespace ErikUI
             source = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+        public void RaisePropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
     }
 }

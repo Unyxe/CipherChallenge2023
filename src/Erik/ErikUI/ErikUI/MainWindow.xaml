@@ -28,12 +28,21 @@
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <!--0,0-->
-        <TextBox x:Name="tbxCiphertext" Margin="5" Text="{Binding Ciphertext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="tbxCiphertext" Margin="5" Text="{Binding Ciphertext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
         <!--1,0-->
-        <TextBox Grid.Column="1" x:Name="tbxPlaintext" Margin="5" Text="{Binding Plaintext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" x:Name="tbxPlaintext" Margin="5" Text="{Binding Plaintext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
         <!--2,0-->
-        <ListView Grid.Column="2">
-            
+        <ListView Grid.Column="2" x:Name="lvFreqAnalysis" Margin="5" ItemsSource="{Binding FrequencyAnalysis, Mode=OneWay}">
+            <ListView.ItemTemplate>
+                <DataTemplate DataType="FreqAnalysisLetter">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Width="15pt" Text="{Binding CorrespondingChar}"/>
+                        <TextBlock Width="15pt" Text="{Binding Char}"/>
+                        <TextBlock Width="40pt" Text="{Binding Value3}"/>
+                        <Rectangle Width="{Binding Length}" Fill="Gray"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <!--0,1-->
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="5">

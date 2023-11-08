@@ -40,7 +40,10 @@ namespace CiphersMain.Ciphers
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < cipherText.Length; i++)
             {
-                sb.Append(key.GetReverse(cipherText[i]));
+                if (Key.ContainsKey(cipherText[i]))
+                    sb.Append(key.GetReverse(cipherText[i]));
+                else
+                    sb.Append(cipherText[i]);
             }
             return sb.ToString();
             //return string.Create(cipherText.Length, cipherText, (chars, buffer) =>
@@ -57,6 +60,8 @@ namespace CiphersMain.Ciphers
             {
                 if (Key.ContainsKey(plainText[i]))
                     sb.Append(Key.GetForward(plainText[i]));
+                else
+                    sb.Append(plainText[i]);
             }
             return sb.ToString();
         }
