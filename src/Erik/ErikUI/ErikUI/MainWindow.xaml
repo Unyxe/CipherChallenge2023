@@ -28,9 +28,13 @@
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
         <!--0,0-->
-        <TextBox x:Name="tbxCiphertext" Margin="10" Text="{Binding Ciphertext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox x:Name="tbxCiphertext" Margin="5" Text="{Binding Ciphertext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <!--1,0-->
-        <TextBox Grid.Column="1" x:Name="tbxPlaintext" Margin="10" Text="{Binding Plaintext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" x:Name="tbxPlaintext" Margin="5" Text="{Binding Plaintext, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        <!--2,0-->
+        <ListView Grid.Column="2">
+            
+        </ListView>
         <!--0,1-->
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Margin="5">
             <StackPanel x:Name="spKey" Orientation="Horizontal" VerticalAlignment="Top">
@@ -52,7 +56,6 @@
                 </ItemsControl>
             </StackPanel>
             <Button Content="Decrypt (Ctrl+D)" x:Name="btDecrypt" Padding="5,2" HorizontalAlignment="Left" Margin="0,5" Click="btDecrypt_Click"/>
-        </StackPanel>
-        
+        </StackPanel>        
     </Grid>
 </Window>

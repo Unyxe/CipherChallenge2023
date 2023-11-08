@@ -3,6 +3,10 @@
 namespace ErikCommon;
 public class Utilities
 {
+    public static readonly string[] ALPHABTE_BY_FREQUENCY = new string[]
+{
+    "E", "T", "A", "O", "I", "N", "S", "R", "H", "L", "D", "C", "U", "M", "W", "F", "G", "Y", "P", "B", "V", "K", "J", "X", "Q", "Z"
+};
     /// <summary>
     /// The alphabet in caps, from A-Z.
     /// </summary>
