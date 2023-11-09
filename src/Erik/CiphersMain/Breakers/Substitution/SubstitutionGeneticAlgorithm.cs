@@ -1,6 +1,7 @@
 ﻿using CiphersMain.Breakers.Fitness;
 using CiphersMain.Ciphers;
 using CiphersMain.Keys;
+using ErikCommon;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -72,7 +73,7 @@ namespace CiphersMain.Breakers.Substitution
         /// <param name="ID">The ID of the simulation. Used in console logging.</param>
         /// <param name="writeToConsole"></param>
         /// <returns></returns>
-        public CharacterKey Run(SubstitutionBreakerParameters parameters, int ID, bool writeToConsole = false)
+        public CharacterKey Run(SubstitutionBreakerParameters parameters, int ID, bool writeToConsole = true)
         {
             // initialise vars in simulation. It's more efficient to initialise them once here.
             CharacterKey bestKey = new(parameters.InitialKey);
@@ -85,12 +86,12 @@ namespace CiphersMain.Breakers.Substitution
             for (int i = 0; i < parameters.MaxGenerations && fitness< parameters.Acceptance; i++)
             {
                 // reset key if we're at a local min
-                if (timeOnKey > 5000)
-                {
-                    timeOnKey = 0;
-                    bestKey = new(parameters.InitialKey);
-                    continue;
-                }
+                //if (timeOnKey > 5000)
+                //{
+                //    timeOnKey = 0;
+                //    bestKey = new(parameters.InitialKey);
+                //    continue;
+                //}
 
                 // find best key
                 keys = _createKeys(bestKey, parameters.KeysPerGeneration, parameters.KnownKey, randomness+ (int)timeOnKey/500);
@@ -108,7 +109,10 @@ namespace CiphersMain.Breakers.Substitution
 
                 // log
                 if (writeToConsole &&i % 200==0 && fitness/ parameters.Acceptance> 0.1)
+                {
                     Console.WriteLine($"Thread: {ID} Gen:{i} Fitness: {fitness} {newfitness} {timeOnKey}");
+                    Utilities.WriteEnumerable(bestKey.Select(x => (x.Key, x.Value)).OrderBy(x => x.Key));
+                }
             }
             return bestKey;
         }

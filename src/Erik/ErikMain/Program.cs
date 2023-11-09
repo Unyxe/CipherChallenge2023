@@ -6,7 +6,7 @@ using ErikCommon;
 using FrequencyAnalysis.Data;
 using System.Diagnostics;
 
-string outputPath = @".\Output\test.json";
+string outputPath = @".\Output\test2.json";
 
 // Load example texts
 string path = @".\ExampleText.txt";
@@ -22,26 +22,19 @@ Stopwatch sw = new Stopwatch();
 sw.Start();
 
 // initialise
-var cipher = new SubstitutionCipher();
-var key = new CharacterKey(Utilities.ALPHABET);
-var breaker = new SubstitutionBreaker();
-key.MutateKey();
+var cipher = new VignereCipher();
+var key = new StringKey("HELOWRD");
 
 // get text to work with
-string text = texts[0].PadRight((int)Math.Ceiling((double)texts[0].Length / 4) * 4, ' ');
+string text = Utilities.CipherFormat("lllllllll");
 
 // encrypt
 
-// Get match of the text, this would usually be a value of the english language
-double textMatch = 1;
+string ciphertext = cipher.Encrypt(text, key);
 
-// break the cipher
-var result = breaker.Break(text, textMatch);
+Console.WriteLine(ciphertext);
+Console.WriteLine(cipher.Decrypt(ciphertext, key));
 
-Console.WriteLine("\nFound key");
-Utilities.WriteEnumerable(result);
-Utilities.WriteEnumerable(key);
-
-FileOutput.JSONWriter.WriteToFile(outputPath, text, key.ToString(), cipher.Decrypt(text, key), "Substitution");
+//FileOutput.JSONWriter.WriteToFile(outputPath, text, key.ToString(), cipher.Decrypt(text, key), "Substitution");
 
 Console.WriteLine(sw.ElapsedMilliseconds);

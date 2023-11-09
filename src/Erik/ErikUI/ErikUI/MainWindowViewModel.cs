@@ -76,7 +76,11 @@ namespace ErikUI
             foreach(var letterPair in result.OrderByDescending(x => x.Value))
             {
                 if (Utilities.ALPHABET.Contains(letterPair.Key[0]))
-                    _frequencyAnalysis.Add(new FreqAnalysisLetter(letterPair.Key[0], letterPair.Value, Utilities.ALPHABET_BY_FREQUENCY[c++]));
+                {
+                    var letter = new FreqAnalysisLetter(letterPair.Key[0], letterPair.Value, Utilities.ALPHABET_BY_FREQUENCY[c++]);
+                    _frequencyAnalysis.Add(letter);
+                }
+                    
             }
             RaisePropertyChanged(nameof(FrequencyAnalysis));
         }
@@ -90,7 +94,16 @@ namespace ErikUI
 
         public void ResetKey()
         {
-            KeyCharacters = new ObservableCollection<KeyUIProperties>(Enumerable.Range(0, 26).Select(i => new KeyUIProperties(i)));
+            if (_keyCharacters == null)
+                _keyCharacters = new ObservableCollection<KeyUIProperties>();
+            else
+                _keyCharacters.Clear();
+            for (int i = 0; i < Utilities.ALPHABET_LENGTH; i++)
+            {
+                var letter = new KeyUIProperties(i);
+                letter.LetterChanged += _handleKeyChanged;
+                _keyCharacters.Add(letter);
+            }
             RaisePropertyChanged(nameof(KeyCharacters));
         }
         public void Decrypt()
@@ -107,6 +120,11 @@ namespace ErikUI
                 Plaintext = cipher.Decrypt(Ciphertext.ToUpper());
             }
             _updateFrequencyAnalysis();
+        }
+        private void _handleKeyChanged(object? sender, KeyLetterChangedEventArgs args)
+        {
+            int index = KeyCharacters.Select((x, i) => (x, i)).First(pair => pair.x.Character == args.After).i;
+            KeyCharacters[index].CharacterNoChanged = args.Before;
         }
         public void GenKey()
         {

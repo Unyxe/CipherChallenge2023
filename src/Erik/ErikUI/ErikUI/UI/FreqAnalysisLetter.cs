@@ -13,7 +13,7 @@ namespace ErikUI
 		public double Value
 		{
 			get { return _value; }
-			set { Set(ref _value, value); }
+			set { Set(ref _value, value);}
 		}
 
 		public double Length

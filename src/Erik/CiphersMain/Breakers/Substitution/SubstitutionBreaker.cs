@@ -43,7 +43,7 @@ namespace CiphersMain.Breakers.Substitution
         }
         private CharacterKey _decrypt(string ciphertext, CharacterKey knownKey, double acceptance, int threadID)
         {
-            CharacterKey startKey = CharacterKey.CreateGoodKey(ciphertext, knownKey);
+            CharacterKey startKey = CharacterKey.CreateGoodKey(Utilities.CipherFormat(ciphertext), knownKey);
             SubstitutionGeneticAlgorithm geneticAlgorithm = new SubstitutionGeneticAlgorithm();
             var foundKey = geneticAlgorithm.Run(new SubstitutionBreakerParameters(ciphertext, startKey, knownKey, _genCount, _keyCount, acceptance > 0 ? acceptance : 1), threadID, true);
             return foundKey;
