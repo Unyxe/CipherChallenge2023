@@ -11,14 +11,16 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Breakers.Vignere
 {
-    public class VignereBreaker
+    public class VignereBreaker : IBreaker<StringKey>
     {
         private IFitnessFunction fitnessFunction;
         public VignereBreaker()
         {
             fitnessFunction = new QuadgramFitnessFunction();
         }
-        public StringKey Break(string cipherText, int keyLength = 5)
+        public StringKey Break(string cipherText) => Break(cipherText, 5);
+        // TODO: optimise with multithreading.
+        public StringKey Break(string cipherText, int keyLength)
         {
             double bestFitness = 0;
             Queue<StringKey> bestKeys = new Queue<StringKey>();

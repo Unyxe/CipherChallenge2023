@@ -12,6 +12,8 @@ namespace CiphersMain.Ciphers
     {
         public StringKey Key { get; set; }
 
+        public string Name => "Vignere";
+
         public string Decrypt(string cipherText, StringKey key)
         {
             StringBuilder sb = new StringBuilder();
@@ -50,9 +52,7 @@ namespace CiphersMain.Ciphers
                     keyIndex++;
                 }
                 else
-                {
                     sb.Append(plainChar);
-                }
             }
             return sb.ToString();
         }

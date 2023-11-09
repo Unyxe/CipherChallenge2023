@@ -8,6 +8,10 @@ namespace CiphersMain.Ciphers;
 /// <typeparam name="T">The key type. Usually <see cref="char"/>.</typeparam>
 public interface ICipher<T>
 {
+    /// <summary>
+    /// The name of the cipher;
+    /// </summary>
+    public string Name { get; }
     public T Key { get; set;  }
     /// <summary>
     /// Encrypts the text.

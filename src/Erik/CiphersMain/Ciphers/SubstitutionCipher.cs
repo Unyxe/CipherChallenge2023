@@ -12,6 +12,8 @@ namespace CiphersMain.Ciphers
     {
         public CharacterKey Key { get; set; }
 
+        public string Name => "Substitution";
+
         public SubstitutionCipher(CharacterKey key)
         {
             Key = key;
