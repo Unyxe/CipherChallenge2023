@@ -15,5 +15,9 @@ namespace CiphersMain.Keys
         {
             Key = key;
         }
+        public override string ToString()
+        {
+            return string.Join("", Values);
+        }
     }
 }

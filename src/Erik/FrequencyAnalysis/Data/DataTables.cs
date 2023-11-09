@@ -21,6 +21,7 @@ namespace FrequencyAnalysis.Data
                 return _instance;
             }
         }
+        public List<string> FiveLetters;
         public EnglishFrequencyAnalysisResult MonogramAnalysis { get; }
         public EnglishFrequencyAnalysisResult BigramAnalysis { get; }
         public EnglishFrequencyAnalysisResult TrigramAnalysis { get; }
@@ -62,6 +63,8 @@ namespace FrequencyAnalysis.Data
             BigramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 2 }, loadDict(".\\Data\\Bigram.csv"));            
             TrigramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 3 }, loadDict(".\\Data\\Trigram.csv"));
             QuadgramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 4 }, loadDict(".\\Data\\Quadgram.csv"));
+
+            FiveLetters = _loadLines(".\\Data\\FiveLetters.csv");
         }
         private Dictionary<string, double> loadDict(string filename)
         {
@@ -80,6 +83,22 @@ namespace FrequencyAnalysis.Data
                 }
             }
             return newDict;
+        }
+        private List<string> _loadLines(string path)
+        {
+            List<string> lines = new List<string>();
+            using (StreamReader sr = new StreamReader(path))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string? line = sr.ReadLine();
+                    if (!string.IsNullOrEmpty(line))
+                    {
+                        lines.Add(line.Replace("\r", "").Replace("\n", "").ToUpper());
+                    }
+                }
+            }
+            return lines;
         }
     }
 }

@@ -81,7 +81,7 @@ public class Utilities
     public static int GetLetterIndex(char c)
     {
         int index = c;
-        if (index > 64 && index < 90)
+        if (index > 64 && index <= 90)
             index -= 65;
         else if (index > 94)
             index -= 95;
