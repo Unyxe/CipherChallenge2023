@@ -47,10 +47,10 @@ namespace CiphersMain.Breakers.Substitution
                 workers[i] = Task.Run(() => _decrypt(ciphertext, knownKey, acceptance, i));
             }
             // ... and wait for the first to finish
-            int index = Task.WaitAny(workers); // BUG: the finished worker is not necessarily correct. Check fitness too.
-            return workers[index].Result;
+            Task.WaitAll(workers);
+            return workers.Select(x => x.Result).OrderByDescending(x => x.Key).Result;
         }
-        private CharacterKey _decrypt(string ciphertext, CharacterKey knownKey, double acceptance, int threadID)
+        private CharacterKeyResult _decrypt(string ciphertext, CharacterKey knownKey, double acceptance, int threadID)
         {
             CharacterKey startKey = CharacterKey.CreateGoodKey(Utilities.CipherFormat(ciphertext), knownKey);
             SubstitutionGeneticAlgorithm geneticAlgorithm = new SubstitutionGeneticAlgorithm();
