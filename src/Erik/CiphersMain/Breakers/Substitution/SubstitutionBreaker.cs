@@ -15,21 +15,18 @@ namespace CiphersMain.Breakers.Substitution
     /// </summary>
     public class SubstitutionBreaker : IBreaker<CharacterKey>
     {
-        // TODO: accept this as parameters
-        private const int _genCount = 10000;
-        private const int _keyCount = 100;
 
         /// <summary>
         /// Attempts to find the key used to encrypt the <paramref name="ciphertext"/>.
         /// </summary>
         /// <param name="ciphertext"></param>
         /// <returns></returns>
-        public CharacterKey Break(string ciphertext) => Break(ciphertext, CharacterKey.Empty, 1);
+        public CharacterKey Break(string ciphertext) => Break(new SubstitutionBreakerParameters(StringUtils.CipherFormat(ciphertext), CharacterKey.CreateGoodKey(ciphertext), CharacterKey.Empty, 1000, 10, 1), 1);
         /// <summary>
         /// Attempts to find the key used to encrypt the <paramref name="ciphertext"/>.
         /// </summary>
         /// <param name="acceptance">The minimum fitness until the ciphertext is deemed fully deciphered.</param>
-        public CharacterKey Break(string ciphertext, double acceptance) => Break(ciphertext, CharacterKey.Empty, acceptance);
+        public CharacterKey Break(string ciphertext, double acceptance) => Break(new SubstitutionBreakerParameters(StringUtils.CipherFormat(ciphertext), CharacterKey.CreateGoodKey(ciphertext), CharacterKey.Empty, 1000, 10, acceptance));
         /// <summary>
         /// Attempts to find the key used to encrypt the <paramref name="ciphertext"/>.
         /// </summary>
@@ -38,23 +35,25 @@ namespace CiphersMain.Breakers.Substitution
         /// <param name="acceptance">The minimum fitness until the ciphertext is deemed fully deciphered.</param>
         /// <param name="threads"></param>
         /// <returns></returns>
-        public CharacterKey Break(string ciphertext, CharacterKey knownKey, double acceptance, int threads = 16)
+        // TODO: optimise.
+        public CharacterKey Break(SubstitutionBreakerParameters parameters, int threads = 16)
         {
             // create workers, run them...
-            Task<CharacterKey>[] workers = new Task<CharacterKey>[threads];
+            Task<CharacterKeyResult>[] workers = new Task<CharacterKeyResult>[threads];
             for (int i = 0; i < threads; i++)
             {
-                workers[i] = Task.Run(() => _decrypt(ciphertext, knownKey, acceptance, i));
+                workers[i] = Task.Run(() => _decrypt(parameters, i));
             }
-            // ... and wait for the first to finish
+            // ... and wait for them all to finish
             Task.WaitAll(workers);
-            return workers.Select(x => x.Result).OrderByDescending(x => x.Key).Result;
+            // take the one with the best key.
+            return workers.Select(x => x.Result).OrderByDescending(x => x.Fitness).First().Key;
         }
-        private CharacterKeyResult _decrypt(string ciphertext, CharacterKey knownKey, double acceptance, int threadID)
+        private CharacterKeyResult _decrypt(SubstitutionBreakerParameters parameters, int threadID)
         {
-            CharacterKey startKey = CharacterKey.CreateGoodKey(Utilities.CipherFormat(ciphertext), knownKey);
+            CharacterKey startKey = CharacterKey.CreateGoodKey(StringUtils.CipherFormat(parameters.Ciphertext), parameters.KnownKey);
             SubstitutionGeneticAlgorithm geneticAlgorithm = new SubstitutionGeneticAlgorithm();
-            var foundKey = geneticAlgorithm.Run(new SubstitutionBreakerParameters(ciphertext, startKey, knownKey, _genCount, _keyCount, acceptance > 0 ? acceptance : 1), threadID, true);
+            var foundKey = geneticAlgorithm.Run(parameters, threadID, true);
             return foundKey;
         }
     }

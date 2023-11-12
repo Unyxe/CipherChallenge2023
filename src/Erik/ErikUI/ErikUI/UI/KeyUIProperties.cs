@@ -37,7 +37,7 @@ namespace ErikUI
             }
         }
 
-        public string Header { get => $"{Index}:{Utilities.GetCharFromIndex(Index)}"; }
+        public string Header { get => $"{Index}:{StringUtils.GetCharFromIndex(Index)}"; }
         public string Text
         {
             get { 
@@ -45,7 +45,7 @@ namespace ErikUI
             }
             set 
             {
-                string newValue = Utilities.CipherFormat(value.Substring(value.Length - 1));
+                string newValue = StringUtils.CipherFormat(value.Substring(value.Length - 1));
                 if (!string.IsNullOrEmpty(newValue))
                 {
                     Character = newValue[0];
@@ -56,7 +56,7 @@ namespace ErikUI
         public KeyUIProperties(int index)
         {
             Index = index;
-            Character = Utilities.GetCharFromIndex(index);
+            Character = StringUtils.GetCharFromIndex(index);
         }
     }
 }

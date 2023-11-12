@@ -29,8 +29,8 @@ namespace CiphersMain.Breakers
                 }
 
                 // swap the values
-                char char1 = Utilities.GetCharFromIndex(index1);
-                char char2 = Utilities.GetCharFromIndex(index2);
+                char char1 = StringUtils.GetCharFromIndex(index1);
+                char char2 = StringUtils.GetCharFromIndex(index2);
                 char tempValue = key[char1];
                 key[char1] = key[char2];
                 key[char2] = tempValue;

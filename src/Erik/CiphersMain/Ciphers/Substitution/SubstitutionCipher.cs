@@ -20,7 +20,7 @@ namespace CiphersMain.Ciphers
         }
         public SubstitutionCipher()
         {
-            Key = new CharacterKey(Utilities.ALPHABET);
+            Key = new CharacterKey(StringUtils.ALPHABET);
         }
 
         /// <summary>
@@ -31,8 +31,8 @@ namespace CiphersMain.Ciphers
         public static CharacterKey CreateCaesarKey(int shift)
         {
             CharacterKey newKey = new CharacterKey();
-            for (int i = 0; i < Utilities.ALPHABET_LENGTH; i++)
-                newKey.SetForward(Utilities.GetCharFromIndex(i), Utilities.GetCharFromIndex((i + shift) % Utilities.ALPHABET_LENGTH));
+            for (int i = 0; i < StringUtils.ALPHABET_LENGTH; i++)
+                newKey.SetForward(StringUtils.GetCharFromIndex(i), StringUtils.GetCharFromIndex((i + shift) % StringUtils.ALPHABET_LENGTH));
             return newKey;
         }
         public string Decrypt(string cipherText)=> Decrypt(cipherText, Key);

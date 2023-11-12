@@ -23,9 +23,9 @@ namespace CiphersMain.Ciphers
                 char cipherChar = cipherText[i];
                 char keyChar = key.Key[keyIndex % key.Count];
 
-                int keyCharIndex = Utilities.GetLetterIndex(keyChar);
+                int keyCharIndex = StringUtils.GetLetterIndex(keyChar);
 
-                char newChar = Utilities.GetCharFromIndex((Utilities.GetLetterIndex(cipherChar) - keyCharIndex + Utilities.ALPHABET_LENGTH) % Utilities.ALPHABET_LENGTH);
+                char newChar = StringUtils.GetCharFromIndex((StringUtils.GetLetterIndex(cipherChar) - keyCharIndex + StringUtils.ALPHABET_LENGTH) % StringUtils.ALPHABET_LENGTH);
                 keyIndex++;
                 sb.Append(newChar);
             }
@@ -40,13 +40,13 @@ namespace CiphersMain.Ciphers
             {
                 char plainChar = plainText[i];
 
-                if (Utilities.ALPHABET.Contains(plainChar))
+                if (StringUtils.ALPHABET.Contains(plainChar))
                 {
                     char keyChar = key.Key[keyIndex % key.Count];
 
-                    int keyCharIndex = Utilities.GetLetterIndex(keyChar);
+                    int keyCharIndex = StringUtils.GetLetterIndex(keyChar);
 
-                    char newChar = Utilities.GetCharFromIndex((Utilities.GetLetterIndex(plainChar) + keyCharIndex) % Utilities.ALPHABET_LENGTH);
+                    char newChar = StringUtils.GetCharFromIndex((StringUtils.GetLetterIndex(plainChar) + keyCharIndex) % StringUtils.ALPHABET_LENGTH);
                     sb.Append(newChar);
 
                     keyIndex++;

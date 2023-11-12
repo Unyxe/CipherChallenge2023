@@ -19,7 +19,7 @@ namespace ErikUI
     internal class MainWindowViewModel : ObservableObject
     {
         public IEnumerable<string> AlphabetByFrequency =>
-            Utilities.ALPHABET_BY_FREQUENCY.Select(x => x.ToString());
+            StringUtils.ALPHABET_BY_FREQUENCY.Select(x => x.ToString());
         private ObservableCollection<FreqAnalysisLetter> _frequencyAnalysis;
         public ObservableCollection<FreqAnalysisLetter> FrequencyAnalysis
         {
@@ -59,7 +59,7 @@ namespace ErikUI
             bool valid = true;
             for (int i = 0; i < 26; i++)
             {
-                char letter = Utilities.GetCharFromIndex(i);
+                char letter = StringUtils.GetCharFromIndex(i);
                 if (!key.ContainsValue(letter))
                 {
                     valid = false;
@@ -75,9 +75,9 @@ namespace ErikUI
             int c = 0;
             foreach(var letterPair in result.OrderByDescending(x => x.Value))
             {
-                if (Utilities.ALPHABET.Contains(letterPair.Key[0]))
+                if (StringUtils.ALPHABET.Contains(letterPair.Key[0]))
                 {
-                    var letter = new FreqAnalysisLetter(letterPair.Key[0], letterPair.Value, Utilities.ALPHABET_BY_FREQUENCY[c++]);
+                    var letter = new FreqAnalysisLetter(letterPair.Key[0], letterPair.Value, StringUtils.ALPHABET_BY_FREQUENCY[c++]);
                     _frequencyAnalysis.Add(letter);
                 }
                     
@@ -98,7 +98,7 @@ namespace ErikUI
                 _keyCharacters = new ObservableCollection<KeyUIProperties>();
             else
                 _keyCharacters.Clear();
-            for (int i = 0; i < Utilities.ALPHABET_LENGTH; i++)
+            for (int i = 0; i < StringUtils.ALPHABET_LENGTH; i++)
             {
                 var letter = new KeyUIProperties(i);
                 letter.LetterChanged += _handleKeyChanged;
@@ -128,10 +128,10 @@ namespace ErikUI
         }
         public void GenKey()
         {
-            var key = CharacterKey.CreateGoodKey(Utilities.CipherFormat(Ciphertext));
+            var key = CharacterKey.CreateGoodKey(StringUtils.CipherFormat(Ciphertext));
             for (int i = 0; i < key.Count; i++)
             {
-                KeyCharacters[i].Character = key[Utilities.GetCharFromIndex(i)];
+                KeyCharacters[i].Character = key[StringUtils.GetCharFromIndex(i)];
             }
             RaisePropertyChanged(nameof(KeyCharacters));
         }

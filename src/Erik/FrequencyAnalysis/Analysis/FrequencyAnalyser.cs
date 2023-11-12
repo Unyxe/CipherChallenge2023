@@ -15,7 +15,7 @@ namespace FrequencyAnalysis
         public static CustomFrequencyAnalysisResult AnalyseText(string text, FrequencyAnalysisParamters param)
         {
             Dictionary<string, int> counts = new Dictionary<string, int>();
-            foreach (var block in Utilities.SplitStringIntoChunks(text, param.NGramLength))
+            foreach (var block in StringUtils.SplitStringIntoChunks(text, param.NGramLength))
             {
                 if (counts.ContainsKey(block))
                     counts[block]++;

@@ -100,10 +100,10 @@ namespace CiphersMain.Breakers.Substitution
                     timeOnKey++;
 
                 // log
-                if (writeToConsole &&i % 200==0 && bestFitness/ parameters.Acceptance> 0.1)
+                if (writeToConsole && i % 200==0 && bestFitness / parameters.Acceptance> 0.1)
                 {
                     Console.WriteLine($"Thread: {ID} Gen:{i} Fitness: {bestFitness} {newfitness} {timeOnKey}");
-                    Utilities.WriteEnumerable(bestKey.Select(x => (x.Key, x.Value)).OrderBy(x => x.Key));
+                    StringUtils.WriteEnumerable(bestKey.Select(x => (x.Key, x.Value)).OrderBy(x => x.Key));
                 }
             }
             return new CharacterKeyResult { Key = bestKey, Fitness = bestFitness };
