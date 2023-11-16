@@ -1,6 +1,7 @@
 ﻿using CiphersMain.Breakers.Fitness;
 using CiphersMain.Ciphers;
 using CiphersMain.Keys;
+using ErikCommon;
 using FrequencyAnalysis;
 using FrequencyAnalysis.Data;
 using System;
@@ -38,6 +39,7 @@ namespace CiphersMain.Breakers.Vignere
                     bestFitness = fitness;
                 }
             }
+            StringUtils.WriteEnumerable(bestKeys, ", ");
             return bestKeys.Last();
         }
     }
