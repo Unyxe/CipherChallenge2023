@@ -26,7 +26,7 @@ namespace CiphersMain.Breakers.Vignere
             double bestFitness = 0;
             Queue<StringKey> bestKeys = new Queue<StringKey>();
             var cipher = new VignereCipher();
-            foreach (var key in DataTables.Instance.SixLetters)
+            foreach (var key in DataTables.Instance.FiveLetters)
             {
                 var currentKey = new StringKey(key);
                 string text = cipher.Decrypt(cipherText, currentKey);

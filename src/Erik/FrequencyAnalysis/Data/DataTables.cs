@@ -54,6 +54,7 @@ namespace FrequencyAnalysis.Data
         }
         public List<string> FiveLetters;
         public List<string> SixLetters;
+        public List<string> SevenLetters;
         public EnglishFrequencyAnalysisResult MonogramAnalysis { get; }
         public EnglishFrequencyAnalysisResult BigramAnalysis { get; }
         public EnglishFrequencyAnalysisResult TrigramAnalysis { get; }
@@ -100,7 +101,9 @@ namespace FrequencyAnalysis.Data
             MorseToChar = new Dictionary<string, char>();
             foreach (var pair in CharToMorse)
                 MorseToChar[pair.Value] = pair.Key;
+            FiveLetters = _loadLines(".\\Data\\FiveLetters.csv");
             SixLetters = _loadLines(".\\Data\\SixLetters.csv");
+            SevenLetters = _loadLines(".\\Data\\SevenLetters.csv");
         }
         private Dictionary<string, double> loadDict(string filename)
         {

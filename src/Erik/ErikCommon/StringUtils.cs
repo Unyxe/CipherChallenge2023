@@ -23,9 +23,9 @@ public class StringUtils
     /// <param name="paddingChar">The char used to pad the final chunk.</param>
     /// <param name="offset">How much to offset each chunk from the last.</param>
     /// <returns>The split string</returns>
-    public static IEnumerable<string> SplitStringIntoChunks(string toSplit, int length)
+    public static IEnumerable<string> SplitStringIntoChunks(string toSplit, int length, int offset = 1)
     {
-        for (int i = 0; i < toSplit.Length - length; i++)
+        for (int i = 0; i < toSplit.Length - length-offset+1; i+=offset)
         {
             yield return toSplit.Substring(i, length);
         }
