@@ -9,6 +9,37 @@ namespace FrequencyAnalysis.Data
 {
     public class DataTables
     {
+        public Dictionary<string, char> MorseToChar;
+        public Dictionary<char, string> CharToMorse = new Dictionary<char, string>
+        {
+            {'A', ".-"},
+            {'B', "-..."},
+            {'C', "-.-."},
+            {'D', "-.."},
+            {'E', "."},
+            {'F', "..-."},
+            {'G', "--."},
+            {'H', "...."},
+            {'I', ".."},
+            {'J', ".---"},
+            {'K', "-.-"},
+            {'L', ".-.."},
+            {'M', "--"},
+            {'N', "-."},
+            {'O', "---"},
+            {'P', ".--."},
+            {'Q', "--.-"},
+            {'R', ".-."},
+            {'S', "..."},
+            {'T', "-"},
+            {'U', "..-"},
+            {'V', "...-"},
+            {'W', ".--"},
+            {'X', "-..-"},
+            {'Y', "-.--"},
+            {'Z', "--.."},
+            {'.',".-.-.-." }
+        };
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         private static DataTables _instance;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
@@ -60,11 +91,15 @@ namespace FrequencyAnalysis.Data
         {
             MonogramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 1 }, _monogramFrequencies);
 
-            BigramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 2 }, loadDict(".\\Data\\Bigram.csv"));            
+            BigramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 2 }, loadDict(".\\Data\\Bigram.csv"));
             TrigramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 3 }, loadDict(".\\Data\\Trigram.csv"));
             QuadgramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 4 }, loadDict(".\\Data\\Quadgram.csv"));
 
             FiveLetters = _loadLines(".\\Data\\FiveLetters.csv");
+
+            MorseToChar = new Dictionary<string, char>();
+            foreach (var pair in CharToMorse)
+                MorseToChar[pair.Value] = pair.Key;
         }
         private Dictionary<string, double> loadDict(string filename)
         {

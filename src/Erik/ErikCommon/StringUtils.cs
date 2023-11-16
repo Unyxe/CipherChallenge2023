@@ -51,7 +51,7 @@ public class StringUtils
                     Console.Write($"{pair.Key}, {pair.Value}{end}");
                     break;
                 default:
-                    Console.Write(item);
+                    Console.Write($"{item}{end}");
                     break;
             }
 #pragma warning restore CS8600, CS8604, CS8605, CS8614, CS8618, CS0184
