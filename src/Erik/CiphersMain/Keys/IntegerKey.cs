@@ -11,6 +11,17 @@ namespace CiphersMain.Keys
         public int[] Integers { get; set; } = new int[0];
         public ICollection<int> Values => Integers;
         public IntegerKey(params int[] numbers) => Integers = numbers;
+        public IntegerKey(int length) => Integers = new int[length];
         public int Count => Integers.Length;
+
+        public IntegerKey Reverse()
+        {
+            IntegerKey newKey = new IntegerKey(Count);
+            for (int i = 0; i < Count; i++)
+            {
+                newKey.Integers[i] = Array.IndexOf(Integers, i);
+            }
+            return newKey;
+        }
     }
 }

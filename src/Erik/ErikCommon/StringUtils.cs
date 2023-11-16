@@ -25,9 +25,19 @@ public class StringUtils
     /// <returns>The split string</returns>
     public static IEnumerable<string> SplitStringIntoChunks(string toSplit, int length, int offset = 1)
     {
-        for (int i = 0; i < toSplit.Length - length-offset+1; i+=offset)
+        for (int i = 0; i <= toSplit.Length - length; i+=offset)
         {
             yield return toSplit.Substring(i, length);
+        }
+    }
+    public static IEnumerable<string> SplitStringIntoChunksWithPadding(string toSplit, int length, int offset = 1)
+    {
+        for (int i = 0; i <= toSplit.Length - length; i += offset)
+        {
+            var sub = toSplit.Substring(i, length);
+            if (sub.Length < length)
+                sub += new string(' ', length - sub.Length);
+            yield return sub;
         }
     }
     /// <summary>
