@@ -22,6 +22,7 @@ namespace FrequencyAnalysis.Data
             }
         }
         public List<string> FiveLetters;
+        public List<string> SixLetters;
         public EnglishFrequencyAnalysisResult MonogramAnalysis { get; }
         public EnglishFrequencyAnalysisResult BigramAnalysis { get; }
         public EnglishFrequencyAnalysisResult TrigramAnalysis { get; }
@@ -65,6 +66,7 @@ namespace FrequencyAnalysis.Data
             QuadgramAnalysis = new EnglishFrequencyAnalysisResult(new FrequencyAnalysisParamters { NGramLength = 4 }, loadDict(".\\Data\\Quadgram.csv"));
 
             FiveLetters = _loadLines(".\\Data\\FiveLetters.csv");
+            SixLetters = _loadLines(".\\Data\\SixLetters.csv");
         }
         private Dictionary<string, double> loadDict(string filename)
         {
