@@ -84,7 +84,7 @@ namespace CiphersMain.Breakers.Substitution
             double timeOnKey = 0;
             int randomness = 2;
 
-            for (int i = 0; i < parameters.MaxGenerations && bestFitness< parameters.Acceptance; i++)
+            for (int i = 0; i < parameters.MaxGenerations && (bestFitness< parameters.Acceptance || parameters.Acceptance == 1); i++)
             {
                 keys = _createKeys(bestKey, parameters.KeysPerGeneration, parameters.KnownKey, randomness+ (int)timeOnKey/500);
                 newKey = FindBestKey(keys, parameters.Ciphertext, out double newfitness);
