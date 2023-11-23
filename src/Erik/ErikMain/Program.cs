@@ -36,16 +36,13 @@ Console.WriteLine(cipherText2);
 
 var breaker = new ColumnTranspositionBreaker();
 
-var cipher = new TranspositionCipher();
+var cipher = new ColumnTranspositionCipher();
 var result4 = breaker.Break(cipherText2, 7);
 
 Console.WriteLine(7);
-Console.WriteLine(cipher.Decrypt(cipherText2, result4));
+Console.WriteLine(result4.BestText);
 
-var key = new IntegerKey(3, 2, 1, 5, 0, 4);
-var plain = cipher.Decrypt(cipherText2, result4);
-
-FileOutput.JSONWriter.WriteToFile(outputPath, cipherText2, string.Join("", key.Values), plain, "COLUMN-TRANSPOSITION");
+FileOutput.JSONWriter.WriteToFile(outputPath, cipherText2, string.Join("", result4.BestKey.Values), result4.BestText, cipher.Name);
 
 
 //var breaker = new SubstitutionBreaker();

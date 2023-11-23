@@ -19,28 +19,17 @@ namespace CiphersMain.Breakers.Vignere
         {
             fitnessFunction = new QuadgramFitnessFunction();
         }
-        public StringKey Break(string cipherText) => Break(cipherText, 5);
-        // TODO: optimise with multithreading.
-        public StringKey Break(string cipherText, int keyLength)
+        public BreakerResult<StringKey> Break(string cipherText)
         {
-            double bestFitness = 0;
-            Queue<StringKey> bestKeys = new Queue<StringKey>();
+            var container = new BreakerResultContainer<StringKey>(5);
             var cipher = new VignereCipher();
-            foreach (var key in DataTables.Instance.FiveLetters)
-            {
+            Parallel.ForEach(DataTables.Instance.FiveLetters, key => {
                 var currentKey = new StringKey(key);
                 string text = cipher.Decrypt(cipherText, currentKey);
                 var fitness = fitnessFunction.CalculateFitness(text);
-                if (fitness > bestFitness)
-                {
-                    bestKeys.Enqueue(currentKey);
-                    while (bestKeys.Count > 10)
-                        bestKeys.Dequeue();
-                    bestFitness = fitness;
-                }
-            }
-            StringUtils.WriteEnumerable(bestKeys, ", ");
-            return bestKeys.Last();
+                container.TryPush(currentKey, fitness, text);
+            });
+            return container.ToResult();
         }
     }
 }

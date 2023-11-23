@@ -1,4 +1,5 @@
-﻿using FrequencyAnalysis.Data;
+﻿using CiphersMain.Keys;
+using FrequencyAnalysis.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,9 +9,23 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Ciphers.Morse
 {
-    public class MorseCipher
+    /// <summary>
+    /// Morse Code - English.
+    /// </summary>
+    public class MorseCipher : ICipher<EmptyKey>
     {
-        public string Name => "Morse";
+        public string Name => "MORSE";
+
+        private EmptyKey _key = EmptyKey.Empty;
+
+        public EmptyKey Key
+        {
+            get { return _key; }
+            set { _key = value; }
+        }
+
+
+        public string Decrypt(string cipherText, ICipher<EmptyKey> _) => Decrypt(cipherText);
 
         public string Decrypt(string cipherText)
         {
@@ -27,6 +42,12 @@ namespace CiphersMain.Ciphers.Morse
             return sb.ToString();
         }
 
+        public string Decrypt(string cipherText, EmptyKey key)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Encrypt(string plainText, ICipher<EmptyKey> _)=> Encrypt(plainText);
         public string Encrypt(string plainText)
         {
             StringBuilder sb = new StringBuilder();
@@ -36,6 +57,11 @@ namespace CiphersMain.Ciphers.Morse
                     sb.Append(DataTables.Instance.CharToMorse[c]);
             }
             return sb.ToString();
+        }
+
+        public string Encrypt(string plainText, EmptyKey key)
+        {
+            throw new NotImplementedException();
         }
     }
 }

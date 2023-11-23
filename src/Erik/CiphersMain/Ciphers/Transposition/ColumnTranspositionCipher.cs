@@ -9,9 +9,12 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Ciphers.Transposition
 {
-    public class TranspositionCipher : ICipher<IntegerKey>
+    /// <summary>
+    /// A column transposition cipher, where text is read in columns after the transposition during encryption.
+    /// </summary>
+    public class ColumnTranspositionCipher : ICipher<IntegerKey>
     {
-        public string Name => "Transposition Cipher";
+        public string Name => "COLUMN-TRANSPOSITION";
 
         public IntegerKey Key { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -27,21 +30,13 @@ namespace CiphersMain.Ciphers.Transposition
             for (int j = 0; j < keyLength; j++)
                 for (int i = 0; i < numRows; i++)
                 {
+                    // add padding for the necessary columns
                     if (i == numRows - 1 && Array.IndexOf(key.Integers,j) > keyLength - padding)
                         matrix[i, j] = ' ';
                     else
                         matrix[i, j] = index < ciphertext.Length ? ciphertext[index++] : ' ';
 
                 }
-
-            //for (int i = 0; i < numRows; i++)
-            //{
-            //    for (int j = 0; j < keyLength; j++)
-            //    {
-            //        Console.Write(matrix[i,j]);
-            //    }
-            //    Console.WriteLine();
-            //}
 
             int[] order = key.Integers;
 

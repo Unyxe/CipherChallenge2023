@@ -48,10 +48,6 @@ namespace CiphersMain.Ciphers
                     sb.Append(cipherText[i]);
             }
             return sb.ToString();
-            //return string.Create(cipherText.Length, cipherText, (chars, buffer) =>
-            //  {
-            //      for (int i = 0; i < chars.Length; i++) chars[i] = key.GetReverse(buffer[i]);
-            //  });
         }
         public string Encrypt(string plainText) => Decrypt(plainText, Key);
         /// <inheritdoc/>

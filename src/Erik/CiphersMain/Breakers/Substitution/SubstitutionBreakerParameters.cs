@@ -9,12 +9,24 @@ namespace CiphersMain.Breakers.Substitution
 {
     public record SubstitutionBreakerParameters
     {
-        public string Ciphertext { get; }
-        public CharacterKey InitialKey { get; }
-        public CharacterKey KnownKey { get; }
-        public int MaxGenerations { get; }
-        public int KeysPerGeneration { get; }
-        public double Acceptance { get; }
+        public string Ciphertext { get; set; }
+        /// <summary>
+        /// A starting key.
+        /// </summary>
+        public CharacterKey InitialKey { get; set; }
+        /// <summary>
+        /// A known key who's keys should be preserved.
+        /// </summary>
+        public CharacterKey KnownKey { get; set; }
+        /// <summary>
+        /// How many iterations of the genetic algorithm to perform.
+        /// </summary>
+        public int MaxGenerations { get; set; }
+        public int KeysPerGeneration { get; set; }
+        /// <summary>
+        /// The target fitness for the genetic algorithm.
+        /// </summary>
+        public double Acceptance { get; set; }
         /// <summary>
         /// Parameters used when breaking a cipher.
         /// </summary>

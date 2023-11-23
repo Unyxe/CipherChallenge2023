@@ -44,10 +44,11 @@ namespace CiphersMain.Breakers.Substitution
         /// <param name="ciphertext"></param>
         /// <param name="bestFitness">The fitness of the best key.</param>
         /// <returns></returns>
-        private CharacterKey FindBestKey(IEnumerable<CharacterKey> keys, string ciphertext, out double bestFitness)
+        private CharacterKey FindBestKey(IEnumerable<CharacterKey> keys, string ciphertext, out double bestFitness, out string text)
         {
             CharacterKey bestKey = CharacterKey.Empty;
             double tempBestFitness = double.MinValue;
+            string bestText = "";
 
             //foreach (var key in keys)
             Parallel.ForEach(keys, key =>
@@ -61,10 +62,12 @@ namespace CiphersMain.Breakers.Substitution
                     {
                         tempBestFitness = fitness;
                         bestKey = key;
+                        bestText = decrypted;
                     }
                 }
             });
             bestFitness = tempBestFitness;
+            text = bestText;
             return bestKey;
         }
         /// <summary>
@@ -74,39 +77,34 @@ namespace CiphersMain.Breakers.Substitution
         /// <param name="ID">The ID of the simulation. Used in console logging.</param>
         /// <param name="writeToConsole"></param>
         /// <returns></returns>
-        public CharacterKeyResult Run(SubstitutionBreakerParameters parameters, int ID, bool writeToConsole = true)
+        public BreakerResult<CharacterKey> Run(SubstitutionBreakerParameters parameters, int ID, bool writeToConsole = true)
         {
             // initialise vars in simulation. It's more efficient to initialise them once here.
-            CharacterKey bestKey = new(parameters.InitialKey);
+            var container = new BreakerResultContainer<CharacterKey>(5);
             IEnumerable<CharacterKey> keys;
             double bestFitness = double.MinValue;
             CharacterKey newKey;
             double timeOnKey = 0;
             int randomness = 2;
 
+            container.TryPush(parameters.KnownKey, -1, string.Empty);
+
             for (int i = 0; i < parameters.MaxGenerations && (bestFitness< parameters.Acceptance || parameters.Acceptance == 1); i++)
             {
-                keys = _createKeys(bestKey, parameters.KeysPerGeneration, parameters.KnownKey, randomness+ (int)timeOnKey/500);
-                newKey = FindBestKey(keys, parameters.Ciphertext, out double newfitness);
+                keys = _createKeys(container.BestKey, parameters.KeysPerGeneration, parameters.KnownKey, randomness+ (int)timeOnKey/500);
+                newKey = FindBestKey(keys, parameters.Ciphertext, out double newfitness, out string text);
 
                 // compare it with the parent
-                if (newfitness > bestFitness)
-                {
-                    timeOnKey = 0;
-                    bestKey = newKey;
-                    bestFitness = newfitness;
-                }
-                else
+                if (!container.TryPush(newKey, newfitness, text))                
                     timeOnKey++;
 
                 // log
                 if (writeToConsole && i % 200==0 && bestFitness / parameters.Acceptance> 0.1)
                 {
                     Console.WriteLine($"Thread: {ID} Gen:{i} Fitness: {bestFitness} {newfitness} {timeOnKey}");
-                    StringUtils.WriteEnumerable(bestKey.Select(x => (x.Key, x.Value)).OrderBy(x => x.Key));
                 }
             }
-            return new CharacterKeyResult { Key = bestKey, Fitness = bestFitness };
+            return container.ToResult();
         }
     }
 }

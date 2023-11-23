@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Breakers.ColumnTransposition
 {
-    public class ColumnTranspositionBreaker// : IBreaker<IntegerKey>
+    public class ColumnTranspositionBreaker : IBreaker<IntegerKey>
     {
         IFitnessFunction fitnessFunction = new BigramFitnessFunction();
-        TranspositionCipher cipher = new TranspositionCipher();
+        ColumnTranspositionCipher cipher = new ColumnTranspositionCipher();
         private void _permutation(IList<int[]> permutations, int[] current, int currentLength)
         {
             if (currentLength == current.Length)
@@ -40,32 +40,25 @@ namespace CiphersMain.Breakers.ColumnTransposition
             _permutation(permutations, arr, 0);
             return permutations;
         }
-        public IntegerKey Break(string ciphertext, int length)
+        public BreakerResult<IntegerKey> Break(string ciphertext, int length)
         {
-            object lockObj = new object();
             var permutations = _generateAllPermutations(length);
-            //StringUtils.WriteEnumerable(permutations.Select(x => string.Join(", ",x)), "\n");
+            var container = new BreakerResultContainer<IntegerKey>(5);
             Queue<IntegerKey> bestKeys = new Queue<IntegerKey>();
             double bestFitness = -1;
-            foreach(var x in permutations)
+            foreach (var x in permutations)
             {
                 var key = new IntegerKey(x);
                 string plain = cipher.Decrypt(ciphertext, key);
                 double fitness = fitnessFunction.CalculateFitness(plain);
-                lock (lockObj)
-                {
-                    if (fitness > bestFitness)
-                    {
-                        bestKeys.Enqueue(key);
-                        while (bestKeys.Count > 5)
-                            bestKeys.Dequeue();
-                        bestFitness = fitness;
-                    }
-                }
+
+                container.TryPush(key, fitness, plain);
             }
             StringUtils.WriteEnumerable(bestKeys, "\n");
             Console.WriteLine(bestFitness);
-            return bestKeys.Last();
+            return container.ToResult();
         }
+        public BreakerResult<IntegerKey> Break(string ciphertext) => Break(ciphertext, 5);
+        
     }
 }
