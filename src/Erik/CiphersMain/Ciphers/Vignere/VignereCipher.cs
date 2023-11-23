@@ -12,7 +12,7 @@ namespace CiphersMain.Ciphers
     {
         public StringKey Key { get; set; }
 
-        public string Name => "Vignere";
+        public string Name => "VIGNERE";
 
         public string Decrypt(string cipherText, StringKey key)
         {

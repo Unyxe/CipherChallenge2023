@@ -12,7 +12,7 @@ namespace CiphersMain.Ciphers
     {
         public CharacterKey Key { get; set; }
 
-        public string Name => "Substitution";
+        public string Name => "SUBSTITUTION";
 
         public SubstitutionCipher(CharacterKey key)
         {

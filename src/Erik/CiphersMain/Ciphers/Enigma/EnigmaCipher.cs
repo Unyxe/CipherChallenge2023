@@ -9,6 +9,7 @@ namespace CiphersMain.Ciphers
 {
     public class EnigmaCipher
     {
+        public string Name => "ENIGMA";
         public EnigmaWheel[] Wheels { get; private set; }
     }
 }
