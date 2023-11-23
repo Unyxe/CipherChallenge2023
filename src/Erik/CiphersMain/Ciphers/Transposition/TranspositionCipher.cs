@@ -17,20 +17,17 @@ namespace CiphersMain.Ciphers.Transposition
 
         public string Decrypt(string cipherText, IntegerKey key)
         {
-            StringBuilder sb = new();
-            int length = cipherText.Length/key.Count;
-            var chunks = StringUtils.SplitStringIntoChunks(cipherText, length, length).ToArray();
-            for (int r = 0; r < length; r++)
-            {
-                for (int i = 0; i < key.Count; i++)
-                {
-                    int index = Array.IndexOf(key.Integers, i);
-                    var chunk = chunks[index];
-                    sb.Append(chunk[r]);
-                }
+            int rows = (int)Math.Ceiling((double)cipherText.Length / key.Count);
+            char[,] matrix = new char[rows, key.Count];
 
+            for (int i = 0; i < cipherText.Length; i++)
+            {
+                int row = i / key.Count;
+                int col = key.Integers[i % key.Count];
+                matrix[row, col] = cipherText[i];
             }
-            return sb.ToString();
+
+            return string.Concat(Enumerable.Range(0, rows).Select(i => new string(Enumerable.Range(0, key.Count).Select(j => matrix[i, j]).ToArray())));
         }
 
         public string Encrypt(string plainText, IntegerKey key)
