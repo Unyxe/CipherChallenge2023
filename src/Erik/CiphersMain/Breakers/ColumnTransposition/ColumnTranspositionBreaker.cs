@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Breakers.ColumnTransposition
 {
-    public class ColumnTranspositionBreaker : IBreaker<IntegerKey>
+    public class ColumnTranspositionBreaker// : IBreaker<IntegerKey>
     {
         IFitnessFunction fitnessFunction = new BigramFitnessFunction();
         TranspositionCipher cipher = new TranspositionCipher();
@@ -40,11 +40,11 @@ namespace CiphersMain.Breakers.ColumnTransposition
             _permutation(permutations, arr, 0);
             return permutations;
         }
-        public IntegerKey Break(string ciphertext)
+        public IntegerKey Break(string ciphertext, int length)
         {
             object lockObj = new object();
-            var permutations = _generateAllPermutations(6);
-            StringUtils.WriteEnumerable(permutations.Select(x => string.Join(", ",x)), "\n");
+            var permutations = _generateAllPermutations(length);
+            //StringUtils.WriteEnumerable(permutations.Select(x => string.Join(", ",x)), "\n");
             Queue<IntegerKey> bestKeys = new Queue<IntegerKey>();
             double bestFitness = -1;
             foreach(var x in permutations)
@@ -54,7 +54,7 @@ namespace CiphersMain.Breakers.ColumnTransposition
                 double fitness = fitnessFunction.CalculateFitness(plain);
                 lock (lockObj)
                 {
-                    if (plain.StartsWith("JOD"))//if (fitness > bestFitness)
+                    if (fitness > bestFitness)
                     {
                         bestKeys.Enqueue(key);
                         while (bestKeys.Count > 5)
@@ -64,6 +64,7 @@ namespace CiphersMain.Breakers.ColumnTransposition
                 }
             }
             StringUtils.WriteEnumerable(bestKeys, "\n");
+            Console.WriteLine(bestFitness);
             return bestKeys.Last();
         }
     }

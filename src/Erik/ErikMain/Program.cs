@@ -13,10 +13,10 @@ using FileOutput;
 using System.ComponentModel.DataAnnotations;
 using CiphersMain.Breakers.ColumnTransposition;
 
-string outputPath = @"C:\Erik\CMS\CipherChallenge2023\ErikResults\Challenge7A.json";
+string outputPath = @"C:\Erik\CMS\CipherChallenge2023\ErikResults\Challenge7B.json";
 
-if (!File.Exists(outputPath))
-    outputPath = @"C:\Erik\School\CipherChallenge2023\ErikResults\Challenge7A.json";
+//if (!File.Exists(outputPath))
+//    outputPath = @"C:\Erik\School\CipherChallenge2023\ErikResults\Challenge7B.json";
 
 // Load example texts
 string path = @".\ExampleOrwell.txt";
@@ -34,11 +34,18 @@ string cipherText2 = morse.Decrypt(cipherText);
 
 Console.WriteLine(cipherText2);
 
+var breaker = new ColumnTranspositionBreaker();
+
 var cipher = new TranspositionCipher();
-var testKey = new IntegerKey(0, 3, 5, 6, 4, 2, 1);
-Console.WriteLine(cipher.Decrypt(cipherText2, testKey));
-var t = @"AIYNAGKRCTELUOISGAEELLSONOKONSNAAOTOWDSMSEAATOEPNCEDTLVUNTRLIDDTHHEPTEFAIADGOSWREMUIREINMOUSRSGSIEHNYARSRESNORROEDRELEONPESEEHUAEMAIOCRBRMEIISFELTNIRTEYLVAOTTTESROTRNWAOIQIIKNEANTOAETNTTIEOETNTFUNIDFEETMSRTMHEOCDIEEAYECYFIOHESAPECNRLDWDNSIILNTGEIOAADSEEBSEDOUASLITRTESROSOSTALEEIAYAGLNYOESOEAROOAMEOSNISGAIAHALNSTECITTEUCDRSIWLGMNITEMPENNEDWVUFYLLSNVYRDEEELTRTALODPISSDPRSNTYLASEDEPTRPODNCICBNARNAYHSPOAALVYLEOARRDILNSSYIIECOADEUEETEAPADSAPBREPOLSTIFLECCIVERSAEDOOCWRSGOOEUENNOCLQEFEESNRRCARDQOSAACRRPLNIEHSTEBEMTERSDNLYATREOTNMERTNELNLAIUITFEENTGIFLISWDENCMSE";
-//FileOutput.JSONWriter.WriteToFile(outputPath, cipherText, "FRENCH", plain, "VIGNERE");
+var result4 = breaker.Break(cipherText2, 7);
+
+Console.WriteLine(7);
+Console.WriteLine(cipher.Decrypt(cipherText2, result4));
+
+var key = new IntegerKey(3, 2, 1, 5, 0, 4);
+var plain = cipher.Decrypt(cipherText2, result4);
+
+FileOutput.JSONWriter.WriteToFile(outputPath, cipherText2, string.Join("", key.Values), plain, "COLUMN-TRANSPOSITION");
 
 
 //var breaker = new SubstitutionBreaker();
