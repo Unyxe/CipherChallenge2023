@@ -15,19 +15,40 @@ namespace CiphersMain.Ciphers.Transposition
 
         public IntegerKey Key { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        public string Decrypt(string cipherText, IntegerKey key)
+        public string Decrypt(string ciphertext, IntegerKey key)
         {
-            int rows = (int)Math.Ceiling((double)cipherText.Length / key.Count);
-            char[,] matrix = new char[rows, key.Count];
+            int keyLength = key.Count;
+            int numRows = (ciphertext.Length + keyLength - 1) / keyLength;
+            int padding = ciphertext.Length % keyLength;
 
-            for (int i = 0; i < cipherText.Length; i++)
+            char[,] matrix = new char[numRows, keyLength];
+            int index = 0;
+
+            for (int j = 0; j < keyLength; j++)
+                for (int i = 0; i < numRows; i++)
+                {
+                    if (i == numRows - 1 && Array.IndexOf(key.Integers,j) > keyLength - padding)
+                        matrix[i, j] = ' ';
+                    else
+                        matrix[i, j] = index < ciphertext.Length ? ciphertext[index++] : ' ';
+
+                }
+
+            for (int i = 0; i < numRows; i++)
             {
-                int row = i / key.Count;
-                int col = key.Integers[i % key.Count];
-                matrix[row, col] = cipherText[i];
+                for (int j = 0; j < keyLength; j++)
+                {
+                    Console.Write(matrix[i,j]);
+                }
+                Console.WriteLine();
             }
 
-            return string.Concat(Enumerable.Range(0, rows).Select(i => new string(Enumerable.Range(0, key.Count).Select(j => matrix[i, j]).ToArray())));
+            int[] order = key.Integers;
+
+            return new string(Enumerable.Range(0, numRows)
+                .SelectMany(i => order.Select(j => matrix[i, j]))
+                .Where(c => c != ' ')
+                .ToArray());
         }
 
         public string Encrypt(string plainText, IntegerKey key)
