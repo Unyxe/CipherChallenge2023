@@ -15,9 +15,8 @@ namespace CiphersMain.Ciphers.Transposition
     public class ColumnTranspositionCipher : ICipher<IntegerKey>
     {
         public string Name => "COLUMN-TRANSPOSITION";
-
-        public IntegerKey Key { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
+        public IntegerKey Key { get; set; } = new IntegerKey();
+        public string Decrypt(string ciphertext) => Decrypt(ciphertext, Key);
         public string Decrypt(string ciphertext, IntegerKey key)
         {
             int keyLength = key.Count;
@@ -31,7 +30,7 @@ namespace CiphersMain.Ciphers.Transposition
                 for (int i = 0; i < numRows; i++)
                 {
                     // add padding for the necessary columns
-                    if (i == numRows - 1 && Array.IndexOf(key.Integers,j) > keyLength - padding)
+                    if (i == numRows - 1 && Array.IndexOf(key.Integers, j) > keyLength - padding)
                         matrix[i, j] = ' ';
                     else
                         matrix[i, j] = index < ciphertext.Length ? ciphertext[index++] : ' ';
@@ -45,14 +44,15 @@ namespace CiphersMain.Ciphers.Transposition
                 .Where(c => c != ' ')
                 .ToArray());
         }
+        public string Encrypt(string plainText) => Encrypt(plainText, Key);
 
         public string Encrypt(string plainText, IntegerKey key)
         {
             StringBuilder sb = new();
-            var chunks = StringUtils.SplitStringIntoChunks(plainText, key.Count, key.Count);
-            for (int i = 0; i < key.Count; i++)
+            var chunks = StringUtils.SplitStringIntoChunksWithPadding(plainText, key.Count, key.Count);
+            foreach (var chunk in chunks)
             {
-                foreach (var chunk in chunks)
+                for (int i = 0; i < key.Count; i++)
                 {
                     sb.Append(chunk[key.Integers[i]]);
                 }

@@ -12,8 +12,9 @@ using CiphersMain.Ciphers.Transposition;
 using FileOutput;
 using System.ComponentModel.DataAnnotations;
 using CiphersMain.Breakers.ColumnTransposition;
+using StorageManagement;
 
-string outputPath = @"C:\Erik\CMS\CipherChallenge2023\ErikResults\Challenge7B.json";
+string outputPath = @"C:\Erik\CMS\CipherChallenge2023\ErikResults\test.json";
 
 //if (!File.Exists(outputPath))
 //    outputPath = @"C:\Erik\School\CipherChallenge2023\ErikResults\Challenge7B.json";
@@ -26,23 +27,18 @@ if (File.Exists(path))
     texts.Add(StringUtils.CipherFormat(File.ReadAllText(path)));
 
 #region ciphertext
-string cipherText = ".- .. -.-- -. .- / --. -.- .-. -.-. - / . .-.. ..- --- .. / ... --. .- . . / .-.. .-.. ... --- -. / --- -.- --- -. ... / -. .- .- --- - / --- .-- -.. ... -- / ... . .- .- - / --- . .--. -. -.-. / . -.. - .-.. ...- / ..- -. - .-. .-.. / .. -.. -.. - .... / .... . .--. - . / ..-. .- .. .- -.. / --. --- ... .-- .-. / . -- ..- .. .-. / . .. -. -- --- / ..- ... .-. ... --. / ... .. . .... -. / -.-- .- .-. ... .-. / . ... -. --- .-. / .-. --- . -.. .-. / . .-.. . --- -. / .--. . ... . . / .... ..- .- . -- / .- .. --- -.-. .-. / -... .-. -- . .. / .. ... ..-. . .-.. / - -. .. .-. - / . -.-- .-.. ...- .- / --- - - - . / ... .-. --- - .-. / -. .-- .- --- .. / --.- .. .. -.- -. / . .- -. - --- / .- . - -. - / - .. . --- . / - -. - ..-. ..- / -. .. -.. ..-. . / . - -- ... .-. / - -- .... . --- / -.-. -.. .. . . / .- -.-- . -.-. -.-- / ..-. .. --- .... . / ... .- .--. . -.-. / -. .-. .-.. -.. .-- / -.. -. ... .. .. / .-.. -. - --. . / .. --- .- .- -.. / ... . . -... ... / . -.. --- ..- .- / ... .-.. .. - .-. / - . ... .-. --- / ... --- ... - .- / .-.. . . .. .- / -.-- .- --. .-.. -. / -.-- --- . ... --- / . .- .-. --- --- / .- -- . --- ... / -. .. ... --. .- / .. .- .... .- .-.. / -. ... - . -.-. / .. - - . ..- / -.-. -.. .-. ... .. / .-- .-.. --. -- -. / .. - . -- .--. / . -. -. . -.. / .-- ...- ..- ..-. -.-- / .-.. .-.. ... -. ...- / -.-- .-. -.. . . / . .-.. - .-. - / .- .-.. --- -.. .--. / .. ... ... -.. .--. / .-. ... -. - -.-- / .-.. .- ... . -.. / . .--. - .-. .--. / --- -.. -. -.-. .. / -.-. -... -. .- .-. / -. .- -.-- .... ... / .--. --- .- .- .-.. / ...- -.-- .-.. . --- / .- .-. .-. -.. .. / .-.. -. ... ... -.-- / .. .. . -.-. --- / .- -.. . ..- . / . - . .- .--. / .- -.. ... .- .--. / -... .-. . .--. --- / .-.. ... - .. ..-. / .-.. . -.-. -.-. .. / ...- . .-. ... .- / . -.. --- --- -.-. / .-- .-. ... --. --- / --- . ..- . -. / -. --- -.-. .-.. --.- / . ..-. . . ... / -. .-. .-. -.-. .- / .-. -.. --.- --- ... / .- .- -.-. .-. .-. / .--. .-.. -. .. . / .... ... - . -... / . -- - . .-. / ... -.. -. .-.. -.-- / .- - .-. . --- / - -. -- . .-. / - -. . .-.. -. / .-.. .- .. ..- .. / - ..-. . . -. / - --. .. ..-. .-.. / .. ... .-- -.. . / -. -.-. -- ... . /";
+
 #endregion
 
-var morse = new MorseCipher();
-string cipherText2 = morse.Decrypt(cipherText);
-
-Console.WriteLine(cipherText2);
-
-var breaker = new ColumnTranspositionBreaker();
-
-var cipher = new ColumnTranspositionCipher();
-var result4 = breaker.Break(cipherText2, 7);
-
-Console.WriteLine(7);
-Console.WriteLine(result4.BestText);
-
-FileOutput.JSONWriter.WriteToFile(outputPath, cipherText2, string.Join("", result4.BestKey.Values), result4.BestText, cipher.Name);
+var cipher = new TranspositionCipher();
+var plainText = "Hello World!!!!!";
+var key = new IntegerKey(0, 3, 2, 1);
+var cipherText = cipher.Encrypt(plainText, key);
+Console.WriteLine(cipherText);
+Console.WriteLine();
+var deciphered = cipher.Decrypt(cipherText, key);
+Console.WriteLine(deciphered);
+//writer.WriteToFile("test", "foo", "bar", "dum", "YEET");
 
 
 //var breaker = new SubstitutionBreaker();

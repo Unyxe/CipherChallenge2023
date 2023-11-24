@@ -14,7 +14,7 @@ namespace CiphersMain.Keys
         public IntegerKey(int length) => Integers = new int[length];
         public int Count => Integers.Length;
 
-        public IntegerKey Reverse()
+        public IntegerKey ReverseKey()
         {
             IntegerKey newKey = new IntegerKey(Count);
             for (int i = 0; i < Count; i++)
@@ -23,7 +23,7 @@ namespace CiphersMain.Keys
             }
             return newKey;
         }
-
+        public int this[int index] => Integers[index];
         public override string ToString()
         {
             return string.Join(", ", Integers);
