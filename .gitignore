@@ -1,3 +1,4 @@
 *\.vs
 *\bin
 *\obj
+/src/Erik/ErikMain/app.config
