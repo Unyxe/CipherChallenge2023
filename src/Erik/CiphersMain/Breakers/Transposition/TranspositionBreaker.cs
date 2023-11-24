@@ -1,6 +1,4 @@
 ﻿using CiphersMain.Breakers.Fitness;
-using CiphersMain.Breakers.Transposition;
-using CiphersMain.Ciphers;
 using CiphersMain.Ciphers.Transposition;
 using CiphersMain.Keys;
 using ErikCommon;
@@ -12,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Breakers.Transposition
 {
-    public class ColumnTranspositionBreaker : IBreaker<IntegerKey>
+    public class TranspositionBreaker
     {
         IFitnessFunction fitnessFunction = new BigramFitnessFunction();
-        ColumnTranspositionCipher cipher = new ColumnTranspositionCipher();
-        
+        TranspositionCipher cipher = new TranspositionCipher();
+
         public BreakerResult<IntegerKey> Break(string ciphertext, int length)
         {
             var permutations = new IntegerPermutions(length).Permutations;
@@ -36,6 +34,5 @@ namespace CiphersMain.Breakers.Transposition
             return container.ToResult();
         }
         public BreakerResult<IntegerKey> Break(string ciphertext) => Break(ciphertext, 5);
-        
     }
 }

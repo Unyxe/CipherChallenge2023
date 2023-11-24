@@ -82,16 +82,15 @@ namespace CiphersMain.Breakers.Substitution
             // initialise vars in simulation. It's more efficient to initialise them once here.
             var container = new BreakerResultContainer<CharacterKey>(5);
             IEnumerable<CharacterKey> keys;
-            double bestFitness = double.MinValue;
             CharacterKey newKey;
             double timeOnKey = 0;
             int randomness = 2;
 
-            container.TryPush(parameters.KnownKey, -1, string.Empty);
+            container.TryPush(parameters.InitialKey, -1, string.Empty);
 
-            for (int i = 0; i < parameters.MaxGenerations && (bestFitness< parameters.Acceptance || parameters.Acceptance == 1); i++)
+            for (int i = 0; i < parameters.MaxGenerations && (container .BestFitness< parameters.Acceptance || parameters.Acceptance == 1); i++)
             {
-                keys = _createKeys(container.BestKey, parameters.KeysPerGeneration, parameters.KnownKey, randomness+ (int)timeOnKey/500);
+                keys = _createKeys(container.BestKey, parameters.KeysPerGeneration, parameters.KnownKey, 2);
                 newKey = FindBestKey(keys, parameters.Ciphertext, out double newfitness, out string text);
 
                 // compare it with the parent
@@ -99,9 +98,10 @@ namespace CiphersMain.Breakers.Substitution
                     timeOnKey++;
 
                 // log
-                if (writeToConsole && i % 200==0 && bestFitness / parameters.Acceptance> 0.1)
+                if (writeToConsole && i % 2000==0)
                 {
-                    Console.WriteLine($"Thread: {ID} Gen:{i} Fitness: {bestFitness} {newfitness} {timeOnKey}");
+                    Console.WriteLine($"Thread: {ID} Gen:{i} Fitness: {container.BestFitness} {container.BestKey} {newfitness} {timeOnKey} {container.BestText}");
+                    Console.WriteLine();
                 }
             }
             return container.ToResult();

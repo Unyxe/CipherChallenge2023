@@ -21,12 +21,12 @@ namespace CiphersMain.Breakers.Substitution
         /// </summary>
         /// <param name="ciphertext"></param>
         /// <returns></returns>
-        public BreakerResult<CharacterKey> Break(string ciphertext) => Break(new SubstitutionBreakerParameters(StringUtils.CipherFormat(ciphertext), CharacterKey.CreateGoodKey(ciphertext), CharacterKey.Empty, 1000, 10000, 0.126), 16);
+        public BreakerResult<CharacterKey> Break(string ciphertext) => Break(new SubstitutionBreakerParameters(StringUtils.CipherFormat(ciphertext), CharacterKey.CreateGoodKey(ciphertext), CharacterKey.Empty, 2000, 10, 1));
         /// <summary>
         /// Attempts to find the key used to encrypt the <paramref name="ciphertext"/>.
         /// </summary>
         /// <param name="acceptance">The minimum fitness until the ciphertext is deemed fully deciphered.</param>
-        public BreakerResult<CharacterKey> Break(string ciphertext, double acceptance) => Break(new SubstitutionBreakerParameters(StringUtils.CipherFormat(ciphertext), CharacterKey.CreateGoodKey(ciphertext), CharacterKey.Empty, 1000, 1000, acceptance));
+        public BreakerResult<CharacterKey> Break(string ciphertext, double acceptance) => Break(new SubstitutionBreakerParameters(StringUtils.CipherFormat(ciphertext), CharacterKey.CreateGoodKey(ciphertext), CharacterKey.Empty, 2000, 10, acceptance));
         /// <summary>
         /// Attempts to find the key used to encrypt the <paramref name="ciphertext"/>.
         /// </summary>

@@ -11,8 +11,9 @@
         Queue<double> _fitnesses;
         Queue<string> _texts;
         int _length;
-        public double BestFitness { get; private set; } = 0;
-        public IKey BestKey { get => _keys.Peek(); }
+        public double BestFitness { get; private set; } = double.MinValue;
+        public string BestText { get => _texts.Last(); }
+        public IKey BestKey { get => _keys.Last(); }
         public BreakerResultContainer(int length)
         {
             _length = length;
