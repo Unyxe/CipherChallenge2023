@@ -23,7 +23,7 @@ namespace CiphersMain.Breakers.Vignere
         {
             var container = new BreakerResultContainer<StringKey>(5);
             var cipher = new VignereCipher();
-            Parallel.ForEach(DataTables.Instance.FiveLetters, key => {
+            Parallel.ForEach(DataTables.Instance.SevenLetters, key => {
                 var currentKey = new StringKey(key);
                 string text = cipher.Decrypt(cipherText, currentKey);
                 var fitness = fitnessFunction.CalculateFitness(text);
