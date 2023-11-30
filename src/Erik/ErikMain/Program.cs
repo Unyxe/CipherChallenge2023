@@ -33,4 +33,4 @@ Console.WriteLine(result2.BestText);
 Console.WriteLine(result2.BestKey);
 
 var writer = new ResultsWriter();
-writer.WriteToFile("8B", ciphertext, key.ToString(), result2.BestKey.ToString(), "PLAYFAIR");
+writer.WriteToFile("8B", ciphertext, result2.BestKey.ToString(), result2.BestText, "PLAYFAIR");
