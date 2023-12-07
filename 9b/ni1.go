@@ -11,5 +11,5 @@ func main() {
 	for i := range ct {
 		pt[i] = ct[i] - key[i%len(key)]
 	}
-	fmt.Println(pt)
+	fmt.Printf("%#v\n", pt)
 }
