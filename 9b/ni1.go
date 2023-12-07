@@ -9,7 +9,7 @@ var ct = []int{97, 26, 57, 58, 105, 68, 57, 69, 58, 35, 58, 73, 88, 58, 79, 45, 
 func main() {
 	pt := make([]int, len(ct))
 	for i := range ct {
-		pt[i] = ct[i]-key[i%len(key)]
+		pt[i] = ct[i] - key[i%len(key)]
 	}
 	fmt.Println(pt)
 }

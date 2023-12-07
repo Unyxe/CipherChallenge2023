@@ -8,13 +8,23 @@ var ct = []int{97, 26, 57, 58, 105, 68, 57, 69, 58, 35, 58, 73, 88, 58, 79, 45, 
 
 func main() {
 	for n := 1; n < 20; n++ {
+		minima := make([]int, n)
 		maxima := make([]int, n)
+		for i := 0; i < n; i++ {
+			minima[i] = 1000
+		}
 		for i := range ct {
+			minima[i%n] = min(minima[i%n], ct[i])
 			maxima[i%n] = max(maxima[i%n], ct[i])
 		}
-		for i := range maxima {
-			maxima[i] -= 55
+		diff := make([]int, n)
+		for i := range diff {
+			diff[i] = maxima[i] - minima[i]
 		}
-		fmt.Println(n, maxima)
+		fmt.Println(n)
+		fmt.Println(minima)
+		fmt.Println(maxima)
+		fmt.Println(diff)
+		fmt.Println()
 	}
 }
