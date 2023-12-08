@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CiphersMain", "CiphersMain\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErikCommon", "ErikCommon\ErikCommon.csproj", "{5759FCC8-D91A-4EA1-A20A-D37F2A701B0A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FileOutput", "FileOutput\FileOutput.csproj", "{4B914573-496A-493F-BD8B-8749FA13B227}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StorageManagement", "FileOutput\StorageManagement.csproj", "{4B914573-496A-493F-BD8B-8749FA13B227}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ErikUI", "ErikUI\ErikUI\ErikUI.csproj", "{F436BD28-E6EB-4A21-A9B6-B95CE3DED3DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ErikUI", "ErikUI\ErikUI\ErikUI.csproj", "{F436BD28-E6EB-4A21-A9B6-B95CE3DED3DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

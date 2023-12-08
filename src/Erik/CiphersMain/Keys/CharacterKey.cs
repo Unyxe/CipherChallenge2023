@@ -26,7 +26,7 @@ namespace CiphersMain.Keys
         /// <summary>
         /// Creates an empty<see cref="CharacterKey"/>.
         /// </summary>
-        public CharacterKey(){ }
+        public CharacterKey() { }
         /// <summary>
         /// Creates a <see cref="CharacterKey"/> from string representation.
         /// </summary>
@@ -116,7 +116,7 @@ namespace CiphersMain.Keys
         }
         public bool Contains(KeyValuePair<char, char> item) =>
             _forward.Contains(item);
-        public void CopyTo(KeyValuePair<char, char>[] array, int arrayIndex)=>
+        public void CopyTo(KeyValuePair<char, char>[] array, int arrayIndex) =>
             throw new NotImplementedException();
         public bool Remove(KeyValuePair<char, char> item) => Remove(item.Key);
         IEnumerator<KeyValuePair<char, char>> IEnumerable<KeyValuePair<char, char>>.GetEnumerator() => _forward.GetEnumerator();

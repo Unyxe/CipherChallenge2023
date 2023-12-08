@@ -1,3 +1,5 @@
 *\.vs
 *\bin
 *\obj
+/src/Erik/ErikMain/app.config
+*\words_dictionary.json

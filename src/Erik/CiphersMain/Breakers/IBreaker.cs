@@ -12,6 +12,6 @@ namespace CiphersMain.Breakers
     /// <typeparam name="T">They key that the algorithm uses, and returns.</typeparam>
     public interface IBreaker<T>
     {
-        public T Break(string ciphertext);
+        public BreakerResult<T> Break(string ciphertext);
     }
 }

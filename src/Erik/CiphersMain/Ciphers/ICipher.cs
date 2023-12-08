@@ -5,7 +5,7 @@ namespace CiphersMain.Ciphers;
 /// <summary>
 /// A generic Cipher algorithm.
 /// </summary>
-/// <typeparam name="T">The key type. Usually <see cref="char"/>.</typeparam>
+/// <typeparam name="T">The key type, such as <see cref="StringKey"/>.</typeparam>
 public interface ICipher<T>
 {
     /// <summary>
