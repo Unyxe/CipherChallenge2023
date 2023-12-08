@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Keys
 {
-    public class IntegerKey : IKey<int>
+    public class IntegerKey : IKey
     {
         public int[] Integers { get; set; } = new int[0];
-        public ICollection<int> Values => Integers;
         public IntegerKey(params int[] numbers) => Integers = numbers;
         public IntegerKey(int length) => Integers = new int[length];
         public int Count => Integers.Length;
