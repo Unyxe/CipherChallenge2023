@@ -2,7 +2,7 @@
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace FileOutput;
+namespace StorageManagement;
 public class JSONWriter
 {
     private bool promptYesNo(string message)
