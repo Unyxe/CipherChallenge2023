@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CiphersMain.Keys
 {
-    public class CharacterKey : IKey<char>, IDictionary<char, char>
+    public class CharacterKey : IKey, IDictionary<char, char>
     {
         protected Random _randomSource = new Random();
         private Dictionary<char, char> _forward { get; set; } = new Dictionary<char, char>();

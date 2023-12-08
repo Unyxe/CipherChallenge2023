@@ -16,14 +16,6 @@ namespace CiphersMain.Ciphers.Morse
     {
         public string Name => "MORSE";
 
-        private EmptyKey _key = EmptyKey.Empty;
-
-        public EmptyKey Key
-        {
-            get { return _key; }
-            set { _key = value; }
-        }
-
 
         public string Decrypt(string cipherText, ICipher<EmptyKey> _) => Decrypt(cipherText);
 

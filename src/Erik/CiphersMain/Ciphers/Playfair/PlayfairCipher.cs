@@ -12,8 +12,6 @@ namespace CiphersMain.Ciphers.Playfair
     {
         public string Name => "PLAYFAIR";
 
-        public StringKey Key { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
         public string Decrypt(string cipherText, StringKey key)
         {
             var sb = new StringBuilder();

@@ -10,8 +10,6 @@ namespace CiphersMain.Ciphers
 {
     public class VignereCipher : ICipher<StringKey>
     {
-        public StringKey Key { get; set; }
-
         public string Name => "VIGNERE";
 
         public string Decrypt(string cipherText, StringKey key)

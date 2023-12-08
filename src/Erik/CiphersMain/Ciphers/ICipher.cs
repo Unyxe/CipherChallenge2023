@@ -12,7 +12,6 @@ public interface ICipher<T>
     /// The name of the cipher;
     /// </summary>
     public string Name { get; }
-    public T Key { get; set;  }
     /// <summary>
     /// Encrypts the text.
     /// </summary>
