@@ -30,6 +30,13 @@ public class StringUtils
             yield return toSplit.Substring(i, length);
         }
     }
+    public static IEnumerable<string> SplitStringIntoChunksKeepLeftover(string toSplit, int length, int offset = 1)
+    {
+        for (int i = 0; i < toSplit.Length; i += offset)
+        {
+            yield return toSplit.Substring(i, Math.Min(length, toSplit.Length-i));
+        }
+    }
     public static IEnumerable<string> SplitStringIntoChunksWithPadding(string toSplit, int length, int offset = 1)
     {
         for (int i = 0; i <= toSplit.Length - length; i += offset)

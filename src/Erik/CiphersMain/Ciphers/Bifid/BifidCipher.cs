@@ -16,7 +16,7 @@ namespace CiphersMain.Ciphers.Bifid
         public string Decrypt(string cipherText, StringKey key, int n)
         {
             var matrix = _createKeyMatrix(key.Key);
-            var blocks = StringUtils.SplitStringIntoChunks(cipherText, n, n);
+            var blocks = StringUtils.SplitStringIntoChunksKeepLeftover(cipherText, n, n);
             var result = new StringBuilder();
             foreach (var block in blocks)
             {
@@ -37,7 +37,7 @@ namespace CiphersMain.Ciphers.Bifid
         public string Encrypt(string plainText, StringKey key, int n)
         {
             var matrix = _createKeyMatrix(key.Key);
-            var blocks = StringUtils.SplitStringIntoChunks(plainText, n, n);
+            var blocks = StringUtils.SplitStringIntoChunksKeepLeftover(plainText, n, n);
             var result = new StringBuilder();
             foreach (var block in blocks)
             {
