@@ -14,31 +14,25 @@ def remove_duplicates(text):
 
 print(remove_duplicates(ciphertext))
 
-pairs = [ciphertext[i:i+2] for i in range(0, len(ciphertext), 2)]
-
+pairs = [ciphertext[i:i+2] for i in range(0, len(ciphertext), 4)]
 pair_frequencies = Counter(pairs)
-print(len(pair_frequencies))
-
-print("len", len(ciphertext))
+print(pair_frequencies)
 
 mapping = {}
-unique_char = 'A'
+unique_char = 0
 ciphertext_mapped = ""
+table = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_____________"
 
 #print(pair_frequencies.most_common(26))
 
 c = 0
 for pair in pairs:
-    if c % 2 != 0 or pair_frequencies[pair]<=5:
-        continue
-    if pair not in mapping:
-        mapping[pair] = unique_char
-        unique_char = chr(ord(unique_char) + 1)
-    ciphertext_mapped += mapping[pair]
+    if (pair_frequencies[pair]<=3):
+        continue  
+    pair_index = list(pair_frequencies.items()).index(pair)
+    c = table[pair_index]
+    ciphertext_mapped += c
 
 #print(ciphertext)
 print(ciphertext_mapped)
-
-total_pairs = sum(pair_frequencies.values())
-index_of_coincidence = sum((count * (count - 1)) / (total_pairs * (total_pairs - 1)) for count in pair_frequencies.values())
-print(index_of_coincidence)
+print(len(set(list(ciphertext_mapped))))
